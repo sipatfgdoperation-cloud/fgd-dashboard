@@ -1,0 +1,80 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FGD Upload Setup</title><meta name="robots" content="noindex">
+<style>
+:root{--bg:#F3F7FC;--panel:#fff;--edge:#DCE4EE;--txt:#13233B;--sub:#4F627D}
+@media (prefers-color-scheme:dark){:root{--bg:#0B1628;--panel:#13213A;--edge:#28406A;--txt:#E8EEF7;--sub:#A9BBD4}}
+body{margin:0;background:var(--bg);color:var(--txt);font:700 18px/1.4 "Segoe UI",Arial,sans-serif}
+.h{background:linear-gradient(90deg,#0B3A75,#1565C0 55%,#0E8A6E);color:#fff;padding:20px 28px;font-size:28px;letter-spacing:2px}
+.w{max-width:860px;margin:0 auto;padding:20px}
+.c{background:var(--panel);border-radius:18px;padding:20px;margin:16px 0;box-shadow:0 10px 24px rgba(21,101,192,.12)}
+label{display:grid;gap:6px;margin:12px 0;color:var(--sub);font-size:16px}
+input,textarea{font:inherit;color:inherit;background:var(--bg);border:1px solid var(--edge);border-radius:12px;padding:11px 14px}
+textarea{width:100%;min-height:120px;font:600 14px/1.4 monospace}
+button{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:11px 22px;background:linear-gradient(90deg,#D35400,#F08A00);color:#fff;margin-right:10px}
+button.s{background:#1565C0}.n{font-size:16px;color:var(--sub);font-weight:600}.ok{color:#1E8F5A}.bad{color:#E5484D}
+ol li{margin:8px 0;font-weight:600}
+</style></head><body>
+<div class="h">FGD DASHBOARD · UPLOAD PASSWORD SETUP (OWNER ONLY)</div>
+<div class="w">
+<div class="c"><b>What this page does</b>
+<ol class="n"><li>You paste the GitHub access key (fine-grained token, Contents: Read and write on this repository only).</li>
+<li>You choose an upload password for the shift engineers.</li>
+<li>The key is locked (AES-256 encrypted) with that password and saved in <code>access-keys.json</code>. Only someone who types the password can unlock it and upload.</li>
+<li>The access key and the password themselves are never stored anywhere in plain form.</li></ol></div>
+<div class="c">
+<label>GITHUB ACCESS KEY (fine-grained token)<input id="tok" type="password" autocomplete="off" placeholder="github_pat_..."></label>
+<label>UPLOAD PASSWORD for shift engineers (at least 10 characters)<input id="p1" type="password" autocomplete="new-password"></label>
+<label>TYPE THE PASSWORD AGAIN<input id="p2" type="password" autocomplete="new-password"></label>
+<label>LABEL (who this password is for)<input id="lab" value="Shift engineers"></label>
+<label><span><input type="checkbox" id="replace" checked style="width:auto"> Replace all existing passwords (untick to add this one alongside the old ones)</span></label>
+<button id="save">LOCK KEY &amp; SAVE TO WEBSITE</button><button class="s" id="make">ONLY SHOW THE LOCKED KEY</button>
+<p id="out" class="n"></p>
+<textarea id="json" readonly hidden></textarea>
+</div>
+<div class="c"><b>Test a password</b>
+<label>PASSWORD<input id="tp" type="password" autocomplete="off"></label><button class="s" id="test">TEST</button><p id="tout" class="n"></p></div>
+</div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const b64=u=>{let s="";u=new Uint8Array(u);for(let i=0;i<u.length;i+=0x8000)s+=String.fromCharCode.apply(null,u.subarray(i,i+0x8000));return btoa(s)};
+const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const ITER=600000;
+async function lock(token,password,label){
+  const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+  const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(password),"PBKDF2",false,["deriveKey"]);
+  const key=await crypto.subtle.deriveKey({name:"PBKDF2",salt,iterations:ITER,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt"]);
+  const ct=await crypto.subtle.encrypt({name:"AES-GCM",iv},key,new TextEncoder().encode(token));
+  return{label,created:new Date().toISOString().slice(0,10),iter:ITER,salt:b64(salt),iv:b64(iv),data:b64(ct)}}
+async function unlock(e,password){
+  const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(password),"PBKDF2",false,["deriveKey"]);
+  const key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:unb64(e.salt),iterations:e.iter||ITER,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+  return new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:unb64(e.iv)},key,unb64(e.data)))}
+const REPO=(()=>{const h=location.hostname;if(h.endsWith(".github.io")){const o=h.split(".")[0];const s=location.pathname.split("/").filter(Boolean)[0];return{owner:o,repo:s&&!s.includes(".")?s:h}}return{owner:"mridulkantibaruri98-hub",repo:"fgd-dashboard01"}})();
+const API="https://api.github.com/repos/"+REPO.owner+"/"+REPO.repo+"/contents/access-keys.json";
+const out=(t,c)=>{$("out").className="n "+(c||"");$("out").textContent=t};
+function check(){const t=$("tok").value.trim(),a=$("p1").value,b=$("p2").value;
+  if(!t){out("Paste the GitHub access key.","bad");return null}
+  if(a.length<10){out("Use a password of at least 10 characters.","bad");return null}
+  if(a!==b){out("The two passwords do not match.","bad");return null}return{t,a}}
+async function existing(hd){const r=await fetch(API+"?t="+Date.now(),{headers:hd,cache:"no-store"});
+  if(r.status===404)return{sha:null,list:[]};if(!r.ok)throw new Error(r.status===401?"The access key is wrong or expired.":"GitHub refused access (error "+r.status+").");
+  const j=await r.json();let list=[];try{list=JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,"")))))}catch(e){}return{sha:j.sha,list:Array.isArray(list)?list:[]}}
+$("make").addEventListener("click",async()=>{const c=check();if(!c)return;out("Locking…");const e=await lock(c.t,c.a,$("lab").value.trim()||"Shift engineers");
+  $("json").hidden=false;$("json").value=JSON.stringify([e],null,1);out("Copy this text into a file named access-keys.json at the top of the repository.","ok")});
+$("save").addEventListener("click",async()=>{const c=check();if(!c)return;out("Locking the key and saving…");
+  try{const hd={"Authorization":"Bearer "+c.t,"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"};
+    const e=await lock(c.t,c.a,$("lab").value.trim()||"Shift engineers");
+    const ex=await existing(hd);const list=$("replace").checked?[e]:ex.list.concat([e]);
+    const body={message:"Update upload password ("+e.label+")",content:btoa(unescape(encodeURIComponent(JSON.stringify(list,null,1))))};if(ex.sha)body.sha=ex.sha;
+    const p=await fetch(API,{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},hd),body:JSON.stringify(body)});
+    if(!p.ok)throw new Error("GitHub could not save (error "+p.status+").");
+    $("tok").value="";$("p1").value="";$("p2").value="";out("✓ Saved. Shift engineers can upload with the new password in 1–2 minutes.","ok")}
+  catch(err){out(err.message,"bad")}});
+$("test").addEventListener("click",async()=>{$("tout").textContent="Checking…";
+  try{const r=await fetch("access-keys.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("No access-keys.json on the website yet.");
+    const list=await r.json();for(const e of list){try{await unlock(e,$("tp").value);$("tout").className="n ok";$("tout").textContent="✓ Password works ("+e.label+", created "+e.created+").";return}catch(x){}}
+    throw new Error("This password does not unlock any key.")}catch(err){$("tout").className="n bad";$("tout").textContent=err.message}});
+window.__setup={lock,unlock};
+})();
+</script></body></html>
