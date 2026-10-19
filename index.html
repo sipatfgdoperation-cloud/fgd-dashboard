@@ -206,6 +206,8 @@ footer{position:relative}
 .ctrl .cell[hidden]{display:none!important}
 @media (min-width:701px){.ctrl{gap:14px!important}.ctrl .pick input{min-width:0!important;width:196px}.ctrl .period .val{min-width:250px}.ctrl .val{min-width:128px;padding:0 16px}.ctrl .seg button{padding:10px 14px!important}.ctrl .latest{padding:0 12px}.ctrl .arrow{width:46px}}
 @media (min-width:701px){.ctrl #mon{width:236px}}@media (max-width:700px){.ctrl #mon{width:190px!important}}
+
+.fysel{cursor:pointer;appearance:none;-webkit-appearance:none;font-weight:800;color:var(--txt);text-align:center;text-align-last:center;padding-right:38px!important;background-image:linear-gradient(45deg,transparent 50%,#1565C0 50%),linear-gradient(135deg,#1565C0 50%,transparent 50%)!important;background-position:calc(100% - 20px) 52%,calc(100% - 13px) 52%!important;background-size:7px 7px,7px 7px!important;background-repeat:no-repeat!important}
 </style></head><body>
 <div class="band">
   <div class="photo" id="slides"><i class="s on"></i><i class="s"></i><i class="s"></i><i class="s"></i><i class="s"></i></div>
@@ -228,7 +230,7 @@ footer{position:relative}
     <div class="cell"><div class="k">VIEW</div><div class="seg" id="viewSeg"><button data-v="DAILY" class="on">DAILY</button><button data-v="MONTHLY">MONTHLY</button><button data-v="YEARLY">YEARLY</button></div></div>
     <div class="cell" id="monCell"><div class="k">MONTH</div><div class="pick"><button class="arrow" id="mPrev" title="Previous month">◀</button><input type="month" id="mon"><button class="arrow" id="mNext" title="Next month">▶</button></div></div>
     <div class="cell"><div class="k">DATE</div><div class="pick"><button class="arrow" id="dPrev" title="Previous day">◀</button><input type="date" id="dt"><button class="arrow" id="dNext" title="Next day">▶</button><button class="latest" id="latestBtn">LATEST</button></div></div>
-    <div class="cell"><div class="k">FINANCIAL YEAR</div><div class="val" id="fy">—</div></div>
+    <div class="cell"><div class="k">FINANCIAL YEAR</div><select class="val fysel" id="fy" aria-label="Financial year"></select></div>
     <div class="cell period grow"><div class="k">ACTIVE PERIOD</div><div class="val" id="period">—</div></div>
   </div>
   <div id="msg" class="msg" hidden></div>
@@ -395,7 +397,9 @@ const val=(v,unit,d=1)=>v==null?`<span class="tag aw">AWAITED</span>`:`${nf(v,d)
 function render(){
   const P=period(),daily=!!P.daily;
   $("upto").textContent="DATA UP TO "+fD(D.latest);
-  const fs=fyStart(P.b);$("fy").textContent=Y(fs)+"-"+String(Y(fs)+1).slice(2);
+  const fs=fyStart(P.b);
+  {const sel=$("fy"),y0=Y(fyStart(D.first)),y1=Y(fyStart(D.latest))+2;let h="";for(let y=y0;y<=y1;y++)h+=`<option value="${y}">${y}-${String(y+1).slice(2)}</option>`;
+   if(sel.dataset.r!==y0+"-"+y1){sel.innerHTML=h;sel.dataset.r=y0+"-"+y1}sel.value=String(Y(fs))}
   $("period").textContent=daily?fD(P.a):fD(P.a)+"  →  "+fD(P.b);
   $("dt").value=isoD(selDate!=null?selDate:D.latest);$("dt").min=isoD(D.first);$("dt").max=isoD(D.latest);
   $("dt").placeholder=fD(D.latest);
@@ -439,6 +443,9 @@ const clampD=d=>Math.max(D.first,Math.min(D.latest,d));
 $("dt").addEventListener("change",e=>{const d=fromIso(e.target.value);selDate=d==null?null:clampD(d);render()});
 $("dPrev").addEventListener("click",()=>{if(!D)return;selDate=clampD((selDate!=null?selDate:D.latest)-1);render()});
 $("dNext").addEventListener("click",()=>{if(!D)return;const n=(selDate!=null?selDate:D.latest)+1;selDate=n>=D.latest?null:n;render()});
+$("fy").addEventListener("change",e=>{const y=+e.target.value,fs=mk(y,3,1),fe=mk(y+1,2,31);
+  if(fs>D.latest){msg("No data for FY "+y+"-"+String(y+1).slice(2)+" yet – it will appear here automatically once data from 01-Apr-"+y+" is entered.");render();setTimeout(()=>msg(""),6000);return}
+  msg("");selDate=fe>=D.latest?null:Math.max(D.first,fe);selMonth=null;render()});
 $("latestBtn").addEventListener("click",()=>{selDate=null;selMonth=null;render()});
 $("mon").addEventListener("change",e=>{const m=/^(\d{4})-(\d{2})/.exec(e.target.value);selMonth=m?mk(+m[1],+m[2]-1,1):null;if(selMonth!=null&&selMonth>D.latest)selMonth=som(D.latest);render()});
 const shiftM=k=>{if(!D)return;const cur=selMonth!=null?selMonth:som(selDate!=null?selDate:D.latest);let n=mk(Y(cur),M(cur)+k,1);if(n>D.latest)n=som(D.latest);if(eom(n)<D.first)return;selMonth=n;if(selDate!=null&&selDate<n)selDate=null;render()};
