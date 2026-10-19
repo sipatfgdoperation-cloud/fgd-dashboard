@@ -171,6 +171,8 @@ h2{font-size:22px!important}h2 small{font-size:15px!important}.uhead{font-size:2
 .prow>span{font-size:19px!important}.prow b{font-size:24px!important}.prow small,.tv small{font-size:18px!important}
 .tl{font-size:20px!important}.tv{font-size:32px!important}.tn{font-size:17px!important}.gh{font-size:21px!important}
 .irow{font-size:20px!important}.howto li{font-size:18px!important}.pill{font-size:17px}.btn{font-size:17px}}
+
+.pill.src{color:#1E8F5A}:root[data-theme="dark"] .pill.src{color:#6CE0A0}
 </style></head><body>
 <div class="band">
   <div class="photo"></div>
@@ -185,6 +187,7 @@ h2{font-size:22px!important}h2 small{font-size:15px!important}.uhead{font-size:2
   </header>
   <div class="topline">
     <span class="pill">UPDATED · <b id="upto">DATA UP TO —</b></span>
+    <span class="pill src" id="src" hidden></span>
     <button class="btn mode" id="modeBtn" type="button">☾ DARK</button>
   </div>
 </div>
@@ -217,11 +220,11 @@ h2{font-size:22px!important}h2 small{font-size:15px!important}.uhead{font-size:2
       <li><b>FGD availability</b> = FGD run hours ÷ unit run hours × 100. Unit run hours not entered = 24 h; entered hours are used automatically.</li>
       <li><b>SOx removal efficiency</b> = (inlet − outlet) ÷ inlet × 100, worked out daily. FGD run hours = 0 → <b>FGD NOT IN SERVICE</b>; such days are left out of SOx averages.</li>
       <li><b>APC %</b> = FGD MU consumption ÷ unit MU production × 100 (4 decimals); energy in MU and MWh.</li>
-      <li>Data comes from the logbook Excel (DAILY_ENTRY, TRUCKS, DEFECTS) uploaded by the shift engineer with the upload password (button at the bottom of the page).</li>
+      <li>Data comes live from the FGD logbook Google Sheet (DAILY_ENTRY, TRUCKS, DEFECTS) and refreshes about every 5 minutes. If the Google Sheet cannot be reached, the last Excel uploaded with the password (button at the bottom) is shown.</li>
     </ul></div>
   </div>
 </div>
-<div class="upbar"><div><b>SHIFT ENGINEERS</b><span id="updBy"></span></div><button class="btn up" id="openUpd" type="button">⬆ UPLOAD LOGBOOK</button></div>
+<div class="upbar"><div><b>SHIFT ENGINEERS</b><span>Enter data in the Google Sheet – the dashboard updates by itself (about 5 min). Backup: upload the Excel here. </span><span id="updBy"></span></div><button class="btn up" id="openUpd" type="button">⬆ UPLOAD LOGBOOK</button></div>
 <footer><span>Created by <b>Mridul Kanti Baruri</b> · 109384 · Operation · NTPC Sipat</span><span>FGD Stage-I · Units 1–3</span></footer>
 <dialog id="updDlg">
   <div class="dh">UPLOAD LOGBOOK<button class="x" id="updClose" aria-label="Close">×</button></div>
@@ -241,6 +244,9 @@ h2{font-size:22px!important}h2 small{font-size:15px!important}.uhead{font-size:2
 <script>(function(){
 "use strict";
 const DATA_FILE="data/dashboard-data.xlsx", KEYS_FILE="access-keys.json";
+/* Live data source: the published Google Sheet (File → Share → Publish to the web → .xlsx). Leave "" to use only uploads. */
+const GSHEET="https://docs.google.com/spreadsheets/d/e/2PACX-1vTTd8Wky2h1izlwJ_eE5UohRB7CKGVTRtiDZozc4XwDwwpFSyS5XbmpRWczf4ceaRwUMVP6T6IyrP7i/pub?output=xlsx";
+let SOURCE="";
 const $=id=>document.getElementById(id);
 const DAY=86400000, MON=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -415,15 +421,19 @@ const REPO=(()=>{const h=location.hostname;if(h.endsWith(".github.io")){const ow
   return{owner:"mridulkantibaruri98-hub",repo:"fgd-dashboard01"}})();
 const API="https://api.github.com/repos/"+REPO.owner+"/"+REPO.repo;
 function msg(t,err){const m=$("msg");m.hidden=!t;m.className="msg"+(err?" err":"");m.textContent=t||""}
+async function readBook(url){const r=await fetch(url,{cache:"no-store",redirect:"follow"});if(!r.ok)throw new Error("HTTP "+r.status);return parseWorkbook(XLSX.read(await r.arrayBuffer(),{type:"array"}))}
 async function load(){
   msg("Loading the latest logbook…");
   try{
     if(!window.XLSX)throw new Error("The Excel reader did not load. Check the internet connection and refresh the page.");
-    const r=await fetch(DATA_FILE+"?t="+Date.now(),{cache:"no-store"});
-    if(!r.ok)throw new Error("No logbook has been uploaded yet. A shift engineer can upload it with “UPLOAD LOGBOOK”.");
-    const wb=XLSX.read(await r.arrayBuffer(),{type:"array"});
-    D=parseWorkbook(wb);msg("");render();
+    let d=null;
+    if(GSHEET){try{d=await readBook(GSHEET+(GSHEET.includes("?")?"&":"?")+"t="+Date.now());SOURCE="sheet"}catch(e){d=null}}
+    if(!d){try{d=await readBook(DATA_FILE+"?t="+Date.now());SOURCE="upload"}catch(e){d=null}}
+    if(!d)throw new Error("The logbook could not be loaded. Check the internet connection and refresh the page.");
+    D=d;msg("");render();
+    $("src").textContent=SOURCE==="sheet"?"● LIVE FROM GOOGLE SHEET":"● FROM LAST UPLOADED FILE";$("src").hidden=false;
   }catch(e){msg(e.message||"The logbook could not be loaded.",true)}}
+setInterval(()=>{if(SOURCE==="sheet"&&!document.hidden)load()},5*60*1000);
 /* ---------- upload history (public, from GitHub) ---------- */
 const fStamp=s=>{const d=new Date(s);return d.toLocaleString("en-IN",{timeZone:"Asia/Kolkata",day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:false})+" IST"};
 async function history(){
