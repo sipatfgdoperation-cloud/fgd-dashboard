@@ -254,7 +254,7 @@ footer{position:relative}
     <div class="card"><h3>FGD AVAILABILITY TREND</h3><p>FGD availability per unit (%) · touch or point at a bar to see its value</p>
       <div class="leg"><span><i style="background:linear-gradient(#3F86F2,#A9CBFF)"></i>UNIT-1</span><span><i style="background:linear-gradient(#F59A45,#FFD6AC)"></i>UNIT-2</span><span><i style="background:linear-gradient(#2FB37E,#A6E6C9)"></i>UNIT-3</span></div>
       <div class="chart" id="chAvail"></div></div>
-    <div class="card" style="border-top-color:var(--apc)"><h3>APC TREND</h3><p id="apcSub"></p><div class="leg"><span><i style="background:linear-gradient(#8A7CF0,#D3CCFF)"></i>APC (MU)</span><span><i style="background:#14A39A;height:5px;vertical-align:4px"></i>TREND LINE</span></div><div class="chart" id="chApc"></div></div>
+    <div class="card" style="border-top-color:var(--apc)"><h3>APC TREND</h3><p id="apcSub"></p><div class="leg"><span><i style="background:linear-gradient(#8A7CF0,#D3CCFF)"></i>APC (%)</span><span><i style="background:#14A39A;height:5px;vertical-align:4px"></i>TREND LINE</span></div><div class="chart" id="chApc"></div></div>
     <h2>SYSTEM WISE ISSUES<small>FY TO DATE</small></h2>
     <div class="card issuesCard" style="border-top-color:var(--red)"><div class="chart" id="chIss"></div><div class="ilist" id="iList"></div></div>
     <h2>DASHBOARD GUIDE</h2>
@@ -469,7 +469,7 @@ function render(){
   $("chAvail").innerHTML=barChart(P.pts,[0,1,2].map(u=>({name:"UNIT-"+(u+1),grad:SOFT[u],vals:av[u]})),{ymax:100,unit:"%",title:"FGD availability trend",id:"a"});
   const apcU=[];const apc=P.pts.map(p=>{let s=0,u=0,any=false;for(const d of range(p.a,p.b)){const x=D.days[d];if(x&&x.fmu!=null){s+=x.fmu;any=true;if(x.umu!=null)u+=x.umu}}apcU.push(u>0?s/u*100:null);return any?s:null});
   $("apcSub").textContent="Touch a bar for its value · period total "+nf(c.fmu,4)+" MU · APC "+nf(c.apc,4)+" %";
-  $("chApc").innerHTML=barChart(P.pts,[{name:"APC",grad:APC_SOFT,vals:apc}],{unit:"MU",line:true,dec:4,title:"APC trend",id:"p",extra:i=>apcU[i]==null?"":"APC "+nf(apcU[i],4)+" %"});
+  $("chApc").innerHTML=barChart(P.pts,[{name:"APC",grad:APC_SOFT,vals:apcU}],{unit:"%",line:true,dec:4,title:"APC trend",id:"p",extra:i=>apc[i]==null?"":"FGD consumption "+nf(apc[i],4)+" MU"});
   $("chIss").innerHTML=donut(D.issues);
   $("iList").innerHTML=D.issues.map((it,k)=>`<div class="irow" style="--ic:${ISS_COL[k%8]}"><span><i style="background:radial-gradient(circle at 35% 30%,${shade(ISS_COL[k%8],.35)},${ISS_COL[k%8]} 60%,${shade(ISS_COL[k%8],-.2)})"></i>${esc(it.name)}</span><span class="n">${it.val==null?"—":it.val}</span></div>`).join("");
   $("main").hidden=false}
