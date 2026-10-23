@@ -255,17 +255,17 @@ footer{position:relative}
       <div class="leg"><span><i style="background:linear-gradient(#3F86F2,#A9CBFF)"></i>UNIT-1</span><span><i style="background:linear-gradient(#F59A45,#FFD6AC)"></i>UNIT-2</span><span><i style="background:linear-gradient(#2FB37E,#A6E6C9)"></i>UNIT-3</span></div>
       <div class="chart" id="chAvail"></div></div>
     <div class="card" style="border-top-color:var(--apc)"><h3>APC TREND</h3><p id="apcSub"></p><div class="leg"><span><i style="background:linear-gradient(#8A7CF0,#D3CCFF)"></i>APC (MU)</span><span><i style="background:#14A39A;height:5px;vertical-align:4px"></i>TREND LINE</span></div><div class="chart" id="chApc"></div></div>
-    <h2>SYSTEM WISE ISSUES<small>FY TO DATE · FROM DEFECTS SHEET</small></h2>
+    <h2>SYSTEM WISE ISSUES<small>FY TO DATE</small></h2>
     <div class="card issuesCard" style="border-top-color:var(--red)"><div class="chart" id="chIss"></div><div class="ilist" id="iList"></div></div>
-    <h2>HOW TO READ THIS PAGE</h2>
+    <h2>DASHBOARD GUIDE</h2>
     <div class="card howto"><ul>
-      <li><b>DAILY:</b> opens on the latest date; trend = latest date − 7 days. Pick another date (calendar or ◀ ▶): trend = that date ± 7 days.</li>
-      <li><b>MONTHLY:</b> opens on the latest month (1st → latest date); trend = every day of the month. Pick a month and a date: period = 1st of that month → that date (e.g. July + 17-Aug = 01-Jul → 17-Aug); trend = every day of the picked month.</li>
-      <li><b>YEARLY:</b> 01-Apr → latest date (or picked date); trend = one bar per month up to that month.</li>
-      <li><b>FGD availability</b> = FGD run hours ÷ unit run hours × 100. Unit run hours not entered = 24 Hrs; entered hours are used automatically.</li>
-      <li><b>SOx removal efficiency</b> = (inlet − outlet) ÷ inlet × 100, worked out daily. FGD run hours = 0 → <b>FGD NOT IN SERVICE</b>; such days are left out of SOx averages.</li>
-      <li><b>APC %</b> = FGD MU consumption ÷ unit MU production × 100 (4 decimals); energy in MU.</li>
-      <li>Data comes live from the FGD logbook Google Sheet (DAILY_ENTRY, TRUCKS, DEFECTS) and refreshes about every 5 minutes. If the Google Sheet cannot be reached, the last Excel uploaded with the password (button at the bottom) is shown.</li>
+      <li><b>Daily:</b> Latest date by default; infographic shows the previous 7 days (± 7 days for a selected date).</li>
+      <li><b>Monthly:</b> 1st of the month to the selected date; infographic shows every day of the month.</li>
+      <li><b>Yearly:</b> Financial year from 01-Apr to the selected date; infographic shows month-wise values.</li>
+      <li><b>FGD Availability (%)</b> = FGD run Hrs ÷ Unit run Hrs × 100 (Unit run Hrs taken as 24 if not entered).</li>
+      <li><b>SOx Removal Efficiency (%)</b> = (Inlet − Outlet) ÷ Inlet × 100, computed daily. FGD run Hrs = 0 is shown as <b>FGD NOT IN SERVICE</b>.</li>
+      <li><b>APC (%)</b> = Total FGD consumption (MU) ÷ Total unit generation (MU) × 100 for the selected period.</li>
+      <li><b>Data source:</b> FGD logbook (Google Sheet), auto-refreshed every 5 minutes.</li>
     </ul></div>
   </div>
 </div>
