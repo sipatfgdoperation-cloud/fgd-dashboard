@@ -219,6 +219,36 @@ footer{position:relative}
 .issuesCard .irow i{width:34px!important;height:34px!important;border-radius:50%!important;margin-right:12px!important;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.2)}
 .issuesCard .irow .n{color:var(--ic);font-size:1.15em;font-weight:900}
 @media (max-width:700px){.issuesCard .irow i{width:26px!important;height:26px!important}}
+
+/* v15: calm, elegant theme */
+:root{--bg:#F2F6FA;--panel:#FFFFFF;--panel2:#F6F9FC;--edge:#E1E8F0;--txt:#1B2B42;--sub:#56677F;--dim:#8292A8;
+--u1:#3A7BD5;--u2:#E98A3A;--u3:#3AA272;--pw:#3A86C8;--lime:#6672C4;--gyp:#E0953A;--run:#3AA272;--dew:#8D63C9;--apc:#8D63C9;--red:#D9575B;
+--sec:linear-gradient(100deg,#21497A 0%,#2C69A0 50%,#2E8C86 100%);--soft:0 10px 30px rgba(33,73,122,.08),0 2px 6px rgba(33,73,122,.05)}
+:root[data-theme="dark"]{--bg:#0E1A2B;--panel:#152338;--panel2:#1A2B44;--edge:#26395A;--txt:#E6EDF6;--sub:#A7B6CC;--dim:#8193AD;
+--u1:#6AA6F0;--u2:#F2A462;--u3:#62C795;--pw:#6AB0E8;--lime:#9AA3EE;--gyp:#F2B062;--run:#62C795;--dew:#B596EE;--apc:#B596EE;--red:#EF7B7E;
+--sec:linear-gradient(100deg,#1B3A62 0%,#22578A 50%,#22706C 100%);--soft:0 10px 30px rgba(0,0,0,.28)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1A2B;--panel:#152338;--panel2:#1A2B44;--edge:#26395A;--txt:#E6EDF6;--sub:#A7B6CC;--dim:#8193AD;
+--u1:#6AA6F0;--u2:#F2A462;--u3:#62C795;--pw:#6AB0E8;--lime:#9AA3EE;--gyp:#F2B062;--run:#62C795;--dew:#B596EE;--apc:#B596EE;--red:#EF7B7E;
+--sec:linear-gradient(100deg,#1B3A62 0%,#22578A 50%,#22706C 100%);--soft:0 10px 30px rgba(0,0,0,.28)}}
+body{background:radial-gradient(1200px 600px at 10% 30%,color-mix(in srgb,var(--u1) 6%,transparent),transparent 70%),radial-gradient(1000px 600px at 90% 60%,color-mix(in srgb,var(--u3) 6%,transparent),transparent 70%),var(--bg);background-attachment:fixed}
+h2{border-radius:20px!important;box-shadow:0 8px 22px rgba(33,73,122,.16)!important;letter-spacing:2.5px!important;position:relative;overflow:hidden}
+h2:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.14),transparent 55%);pointer-events:none}
+.unit{border:1px solid color-mix(in srgb,var(--uc) 28%,var(--edge))!important;border-radius:26px!important;box-shadow:var(--soft)!important;background:linear-gradient(180deg,color-mix(in srgb,var(--uc) 5%,var(--panel)) 0%,var(--panel) 40%)!important;transition:transform .25s ease,box-shadow .25s ease}
+.unit:hover,.grp:hover{transform:translateY(-3px);box-shadow:0 18px 40px color-mix(in srgb,var(--uc,var(--gc)) 18%,transparent)!important}
+.uhead{background:linear-gradient(100deg,var(--uc),color-mix(in srgb,var(--uc) 70%,#fff))!important;border-radius:18px!important;box-shadow:0 6px 16px color-mix(in srgb,var(--uc) 28%,transparent)}
+.uhead span{background:rgba(255,255,255,.22)!important}
+.prow{border-bottom:1px solid color-mix(in srgb,var(--uc) 14%,var(--edge))!important}
+.prow b{color:var(--txt)}
+.grp{border:1px solid color-mix(in srgb,var(--gc) 26%,var(--edge))!important;border-radius:26px!important;box-shadow:var(--soft);transition:transform .25s ease,box-shadow .25s ease}
+.gh{background:linear-gradient(100deg,var(--gc),color-mix(in srgb,var(--gc) 65%,#fff))!important;border-radius:16px!important}
+.tile{border:1px solid color-mix(in srgb,var(--tc,var(--gc)) 20%,var(--edge))!important;border-left:5px solid var(--tc,var(--gc))!important;background:linear-gradient(150deg,color-mix(in srgb,var(--tc,var(--gc)) 8%,var(--panel)) 0%,var(--panel) 80%)!important;border-radius:16px!important}
+.card{border-radius:26px!important;box-shadow:var(--soft)!important;border-top-width:4px!important;border:1px solid var(--edge);border-top:4px solid #2C69A0}
+.chart{border:1px solid var(--edge);background:linear-gradient(180deg,var(--panel2),var(--panel))!important}
+.ctrl,.upbar{box-shadow:var(--soft)!important;border-radius:24px!important}
+.gauge svg{filter:none}
+.period .val{background:linear-gradient(90deg,#FFF5E6,#FFE9CC)!important;border-color:#F2CF9C!important;color:#A9560A!important}
+:root[data-theme="dark"] .period .val{background:linear-gradient(90deg,#3A2A14,#4A3417)!important;border-color:#6B4A1C!important;color:#FFC98A!important}
+footer{background:var(--sec)!important}
 </style></head><body>
 <div class="band">
   <div class="photo" id="slides"><i class="s on"></i><i class="s"></i><i class="s"></i><i class="s"></i><i class="s"></i></div>
@@ -389,14 +419,18 @@ function barChart(pts,series,o){
     g+=`<path d="${path}" fill="none" stroke="#14A39A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity=".9"/>${dots.replace(/fill="var\(--line\)"/g,'fill="#14A39A"')}`}
   return g+"</svg>"}
 function gauge(pct,color,id){
-  const p=pct==null?0:Math.max(0,Math.min(100,pct)),cx=100,cy=100,R=84;let sect="";
-  if(p>=99.95)sect=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="${color}"/>`;
-  else if(p>0){const a=2*Math.PI*p/100,x=cx+R*Math.sin(a),y=cy-R*Math.cos(a);sect=`<path d="M${cx},${cy} L${cx},${cy-R} A${R},${R} 0 ${p>50?1:0} 1 ${x.toFixed(1)},${y.toFixed(1)} Z" fill="${color}"/>`}
-  let ticks="";for(let k=0;k<40;k++)ticks+=`<line x1="${cx}" y1="${cy-96}" x2="${cx}" y2="${cy-(k%5?91:88)}" stroke="${color}" stroke-opacity="${k%5?.35:.9}" stroke-width="${k%5?1.4:2.4}" transform="rotate(${k*9} ${cx} ${cy})"/>`;
-  return `<svg viewBox="0 0 200 200">${ticks}<circle cx="${cx}" cy="${cy}" r="${R}" fill="var(--edge)"/>${sect}<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="var(--panel)" stroke-width="3"/>
-  <defs><filter id="gs${id}" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0B3A75" flood-opacity=".28"/></filter><radialGradient id="gb${id}" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="var(--panel)"/><stop offset="1" stop-color="var(--panel2)"/></radialGradient></defs>
-  <circle cx="${cx}" cy="${cy}" r="62" fill="url(#gb${id})" stroke="${color}" stroke-width="4" filter="url(#gs${id})"/><circle cx="${cx}" cy="${cy}" r="54" fill="none" stroke="${color}" stroke-opacity=".25" stroke-width="1.5"/>
-  <text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="${pct!=null&&pct>=99.95?31:37}" font-weight="900" fill="var(--txt)">${pct==null?"—":pct.toFixed(1)}</text><text x="${cx}" y="${cy+36}" text-anchor="middle" font-size="24" font-weight="900" fill="${color}">%</text></svg>`}
+  const p=pct==null?0:Math.max(0,Math.min(100,pct)),cx=100,cy=100,R=87;let sect="";
+  if(p>=99.995)sect=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#gf${id})"/>`;
+  else if(p>0){const a=2*Math.PI*p/100,x=cx+R*Math.sin(a),y=cy-R*Math.cos(a);sect=`<path d="M${cx},${cy} L${cx},${cy-R} A${R},${R} 0 ${p>50?1:0} 1 ${x.toFixed(2)},${y.toFixed(2)} Z" fill="url(#gf${id})"/>`}
+  let ticks="";for(let k=0;k<40;k++)ticks+=`<line x1="${cx}" y1="${cy-99}" x2="${cx}" y2="${cy-(k%5?95:92.5)}" stroke="${color}" stroke-opacity="${k%5?.3:.8}" stroke-width="${k%5?1.3:2.2}" stroke-linecap="round" transform="rotate(${k*9} ${cx} ${cy})"/>`;
+  const txt=pct==null?"—":pct.toFixed(2);
+  return `<svg viewBox="0 0 200 200"><defs>
+  <linearGradient id="gf${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${color}" stop-opacity=".78"/><stop offset="1" stop-color="${color}"/></linearGradient>
+  <radialGradient id="gl${id}" cx=".32" cy=".24" r=".75"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".55" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <filter id="gs${id}" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="${color}" flood-opacity=".35"/></filter></defs>
+  ${ticks}<g filter="url(#gs${id})"><circle cx="${cx}" cy="${cy}" r="${R}" fill="${color}" fill-opacity=".14"/>${sect}</g>
+  <circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#gl${id})"/><circle cx="${cx}" cy="${cy}" r="${R-1}" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
+  <text x="${cx}" y="${cy+13}" text-anchor="middle" font-size="${txt.length>5?32:38}" font-weight="900" fill="var(--txt)" stroke="var(--panel)" stroke-width="6" stroke-linejoin="round" paint-order="stroke">${txt}<tspan font-size="22" dx="1">%</tspan></text></svg>`}
 const ISS_COL=["#1E88E5","#FB8C00","#8E24AA","#43A047","#E53935","#00ACC1","#795548","#607D8B"];
 const shade=(hex,f)=>{const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const t=f<0?0:255,k=Math.abs(f);r=Math.round(r+(t-r)*k);g=Math.round(g+(t-g)*k);b=Math.round(b+(t-b)*k);return"#"+((1<<24)|(r<<16)|(g<<8)|b).toString(16).slice(1)};
 function donut(items){
