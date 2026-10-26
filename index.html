@@ -273,6 +273,17 @@ footer{background:var(--sec)!important}
 @media (prefers-reduced-motion:reduce){.ttrack{animation-duration:400s}}
 .teamstrip+footer{border-top:1px solid rgba(255,255,255,.15);justify-content:space-between}
 @media (max-width:700px){.teamstrip{flex-direction:column}.ttag{justify-content:center;padding:8px 12px;font-size:15px;letter-spacing:1px}.ttrack span{font-size:18px}}
+
+/* bigger colour codes in chart legends */
+.leg{gap:26px!important;align-items:center}
+.leg span{display:inline-flex;align-items:center;font-size:26px!important;font-weight:900}
+.leg i{width:34px!important;height:34px!important;border-radius:9px!important;margin-right:10px!important;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.leg i[style*="height:5px"]{height:8px!important;width:44px!important;border-radius:4px!important;box-shadow:none}
+@media (max-width:700px){.leg span{font-size:18px!important}.leg i{width:26px!important;height:26px!important}}
+
+/* total water split – clearer */
+.tn .wsp{display:block;color:var(--txt);font-weight:800;opacity:.85;line-height:1.35}
+.tn .wsp b{font-weight:900;color:var(--tc,var(--gc));opacity:1}
 </style></head><body>
 <div class="band">
   <div class="photo" id="slides"><i class="s on"></i><i class="s"></i><i class="s"></i><i class="s"></i><i class="s"></i></div>
@@ -305,11 +316,11 @@ footer{background:var(--sec)!important}
     <h2>COMMON SYSTEM PARAMETERS<small id="cmSub"></small></h2>
     <div class="groups" id="groups"></div>
     <h2 id="trTitle">INFOGRAPHICS<small id="trSub"></small></h2>
-    <div class="card"><h3>FGD AVAILABILITY TREND</h3><p>FGD availability per unit (%) · touch or point at a bar to see its value</p>
+    <div class="card"><h3>FGD AVAILABILITY TREND</h3><p>Tap a bar to see the value</p>
       <div class="leg"><span><i style="background:linear-gradient(#3F86F2,#A9CBFF)"></i>UNIT-1</span><span><i style="background:linear-gradient(#F59A45,#FFD6AC)"></i>UNIT-2</span><span><i style="background:linear-gradient(#2FB37E,#A6E6C9)"></i>UNIT-3</span></div>
       <div class="chart" id="chAvail"></div></div>
     <div class="card" style="border-top-color:var(--apc)"><h3>APC TREND</h3><p id="apcSub"></p><div class="leg"><span><i style="background:linear-gradient(#8A7CF0,#D3CCFF)"></i>APC (%)</span><span><i style="background:#14A39A;height:5px;vertical-align:4px"></i>TREND LINE</span></div><div class="chart" id="chApc"></div></div>
-    <h2>SYSTEM WISE ISSUES<small>FY TO DATE</small></h2>
+    <h2>SYSTEM WISE ISSUES</h2>
     <div class="card issuesCard" style="border-top-color:var(--red)"><div class="chart" id="chIss"></div><div class="ilist" id="iList"></div></div>
     <h2>DASHBOARD GUIDE</h2>
     <div class="card howto"><ul>
@@ -319,8 +330,8 @@ footer{background:var(--sec)!important}
     </ul></div>
   </div>
 </div>
-<div class="upbar"><div><b>SHIFT ENGINEERS</b><span id="updBy"></span></div><button class="btn up" id="openUpd" type="button">⬆ UPLOAD LOGBOOK</button></div>
-<div class="teamstrip" aria-label="With gratitude to Team FGD"><div class="ttag">🙏 WITH GRATITUDE TO TEAM FGD</div><div class="tflow"><div class="ttrack"><span>Shri Pushpendra Kumar Chaurasia<em>DGM</em></span><b>✦</b><span>Shri Manas Ranjan Behera<em>DGM</em></span><b>✦</b><span>Shri Dheer Singh Meena<em>DGM</em></span><b>✦</b><span>Shri Rajat Kumar Katiyar<em>Engineer</em></span><b>✦</b><span>Shri Ashish Gupta<em>Engineer</em></span><b>✦</b><span>Shri Dev Prabhakar Tiwari<em>Senior Manager</em></span><b>✦</b><span>Shri Kamlesh Prasad Shahu<em>Assistant Manager</em></span><b>✦</b><span>Shri Aman Yadav<em>Engineer</em></span><b>✦</b><span>Shri Rohit Kumar Singh<em>Engineer</em></span><b>✦</b><span>Shri Ramkishor Meena<em>Engineer</em></span><b>✦</b><span>Shri Jethwani Ravikumar Devandas<em>Engineer</em></span><b>✦</b><span>Shri Udit Narayan Verma<em>Engineer</em></span><b>✦</b><span>Shri Rajat Srivastava<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Rajat Sharma<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Vikas Kumar<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Harsh Verdhan Singh Dhawan<em>Sr. Asst. Engineer</em></span><b>✦</b><span aria-hidden="true" class="dup"><span>Shri Pushpendra Kumar Chaurasia<em>DGM</em></span><b>✦</b><span>Shri Manas Ranjan Behera<em>DGM</em></span><b>✦</b><span>Shri Dheer Singh Meena<em>DGM</em></span><b>✦</b><span>Shri Rajat Kumar Katiyar<em>Engineer</em></span><b>✦</b><span>Shri Ashish Gupta<em>Engineer</em></span><b>✦</b><span>Shri Dev Prabhakar Tiwari<em>Senior Manager</em></span><b>✦</b><span>Shri Kamlesh Prasad Shahu<em>Assistant Manager</em></span><b>✦</b><span>Shri Aman Yadav<em>Engineer</em></span><b>✦</b><span>Shri Rohit Kumar Singh<em>Engineer</em></span><b>✦</b><span>Shri Ramkishor Meena<em>Engineer</em></span><b>✦</b><span>Shri Jethwani Ravikumar Devandas<em>Engineer</em></span><b>✦</b><span>Shri Udit Narayan Verma<em>Engineer</em></span><b>✦</b><span>Shri Rajat Srivastava<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Rajat Sharma<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Vikas Kumar<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Harsh Verdhan Singh Dhawan<em>Sr. Asst. Engineer</em></span><b>✦</b></span></div></div></div>
+<div class="upbar"><div><b>SHIFT ENGINEERS</b><span id="updBy"></span></div><button class="btn up" id="openUpd" type="button">⬆ UPLOAD</button></div>
+<div class="teamstrip" aria-label="Heartfelt thanks to Team FGD"><div class="ttag">HEARTFELT THANKS TO TEAM FGD</div><div class="tflow"><div class="ttrack"><span>Shri Pushpendra Kumar Chaurasia<em>DGM</em></span><b>✦</b><span>Shri Manas Ranjan Behera<em>DGM</em></span><b>✦</b><span>Shri Dheer Singh Meena<em>DGM</em></span><b>✦</b><span>Shri Rajat Kumar Katiyar<em>Engineer</em></span><b>✦</b><span>Shri Ashish Gupta<em>Engineer</em></span><b>✦</b><span>Shri Dev Prabhakar Tiwari<em>Senior Manager</em></span><b>✦</b><span>Shri Kamlesh Prasad Shahu<em>Assistant Manager</em></span><b>✦</b><span>Shri Aman Yadav<em>Engineer</em></span><b>✦</b><span>Shri Rohit Kumar Singh<em>Engineer</em></span><b>✦</b><span>Shri Ramkishor Meena<em>Engineer</em></span><b>✦</b><span>Shri Jethwani Ravikumar Devandas<em>Engineer</em></span><b>✦</b><span>Shri Udit Narayan Verma<em>Engineer</em></span><b>✦</b><span>Shri Rajat Srivastava<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Rajat Sharma<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Vikas Kumar<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Harsh Verdhan Singh Dhawan<em>Sr. Asst. Engineer</em></span><b>✦</b><span aria-hidden="true" class="dup"><span>Shri Pushpendra Kumar Chaurasia<em>DGM</em></span><b>✦</b><span>Shri Manas Ranjan Behera<em>DGM</em></span><b>✦</b><span>Shri Dheer Singh Meena<em>DGM</em></span><b>✦</b><span>Shri Rajat Kumar Katiyar<em>Engineer</em></span><b>✦</b><span>Shri Ashish Gupta<em>Engineer</em></span><b>✦</b><span>Shri Dev Prabhakar Tiwari<em>Senior Manager</em></span><b>✦</b><span>Shri Kamlesh Prasad Shahu<em>Assistant Manager</em></span><b>✦</b><span>Shri Aman Yadav<em>Engineer</em></span><b>✦</b><span>Shri Rohit Kumar Singh<em>Engineer</em></span><b>✦</b><span>Shri Ramkishor Meena<em>Engineer</em></span><b>✦</b><span>Shri Jethwani Ravikumar Devandas<em>Engineer</em></span><b>✦</b><span>Shri Udit Narayan Verma<em>Engineer</em></span><b>✦</b><span>Shri Rajat Srivastava<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Rajat Sharma<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Vikas Kumar<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Harsh Verdhan Singh Dhawan<em>Sr. Asst. Engineer</em></span><b>✦</b></span></div></div></div>
 <footer><span>Created by <b>Mridul Kanti Baruri</b> · 109384 · Operation · NTPC Sipat</span><span>FGD Stage-I</span></footer>
 <dialog id="updDlg">
   <div class="dh">UPLOAD LOGBOOK<button class="x" id="updClose" aria-label="Close">×</button></div>
@@ -562,7 +573,7 @@ function render(){
   const c=common(P.a,P.b),tot=daily?"For the day":"Total to "+fDs(P.b);
   const tile=(t,v,unit,note,d=1,strong,tc)=>`<div class="tile"${tc?` style="--tc:${tc}"`:""}><div class="tl">${t}</div><div class="tv">${nf(v,d)}<small>${unit}</small></div><div class="tn${strong?" strong":""}">${note}</div></div>`;
   $("groups").innerHTML=
-   `<section class="grp" style="--gc:var(--pw)"><div class="gh">● POWER &amp; WATER</div>${tile("APC · FGD AUXILIARY CONSUMPTION",c.apc,"%",nf(c.fmu,4)+" MU",4,true)}${tile("TOTAL WATER CONSUMPTION",c.water+c.cw,"m³",D.hasCW?"Process "+nf(c.water,0)+" m³ · Clarified "+nf(c.cw,0)+" m³":"Clarified water column not found in sheet",0)}</section>`+
+   `<section class="grp" style="--gc:var(--pw)"><div class="gh">● POWER &amp; WATER</div>${tile("APC · FGD AUXILIARY CONSUMPTION",c.apc,"%",nf(c.fmu,4)+" MU",4,true)}${tile("TOTAL WATER CONSUMPTION",c.water+c.cw,"m³",D.hasCW?`<span class="wsp">Process Water <b>${nf(c.water,0)}</b> m³</span><span class="wsp">Clarified Water <b>${nf(c.cw,0)}</b> m³</span>`:"Clarified water column not found in sheet",0)}</section>`+
    `<section class="grp" style="--gc:var(--lime)"><div class="gh">● LIMESTONE</div>${tile("LIMESTONE RECEIVED",c.lr,"MT",nf(c.lt,0)+" trucks")}${tile("LIMESTONE CONSUMED",c.lc,"MT",tot)}</section>`+
    `<section class="grp" style="--gc:var(--gyp)"><div class="gh">● GYPSUM</div>${tile("GYPSUM PRODUCED",c.gp,"MT",tot)}${tile("GYPSUM SOLD",c.gs,"MT",nf(c.gt,0)+" trucks")}</section>`+
    `<section class="grp" style="--gc:var(--run)"><div class="gh">● RUNNING HOURS</div>${tile("WET BALL MILL RUN",c.wbm,"Hrs",tot)}${tile("DEWATERING RUN",c.dew,"Hrs",tot,1,false,"var(--dew)")}</section>`;
@@ -573,7 +584,7 @@ function render(){
   const av=[0,1,2].map(u=>P.pts.map(p=>{if(p.a>D.latest)return null;let f=0,r=0,any=false;for(const d of range(p.a,p.b)){const x=D.days[d];if(!x||x.fr[u]==null)continue;any=true;f+=x.fr[u];r+=x.ur[u]!=null?x.ur[u]:24}return any&&r>0?f/r*100:null}));
   $("chAvail").innerHTML=barChart(P.pts,[0,1,2].map(u=>({name:"UNIT-"+(u+1),grad:SOFT[u],vals:av[u]})),{ymax:100,unit:"%",title:"FGD availability trend",id:"a"});
   const apcU=[];const apc=P.pts.map(p=>{let s=0,u=0,any=false;for(const d of range(p.a,p.b)){const x=D.days[d];if(x&&x.fmu!=null){s+=x.fmu;any=true;if(x.umu!=null)u+=x.umu}}apcU.push(u>0?s/u*100:null);return any?s:null});
-  $("apcSub").textContent="Touch a bar for its value · period total "+nf(c.fmu,4)+" MU · APC "+nf(c.apc,4)+" %";
+  $("apcSub").textContent="Total "+nf(c.fmu,4)+" MU · APC "+nf(c.apc,4)+" % · Tap a bar to see the value";
   $("chApc").innerHTML=barChart(P.pts,[{name:"APC",grad:APC_SOFT,vals:apcU}],{unit:"%",line:true,dec:4,title:"APC trend",id:"p",extra:i=>apc[i]==null?"":"FGD consumption "+nf(apc[i],4)+" MU"});
   $("chIss").innerHTML=donut(D.issues,ISSEL);
   $("iList").innerHTML=D.issues.map((it,k)=>`<div class="irow" style="--ic:${ISS_COL[k%8]}"><span><i style="background:radial-gradient(circle at 35% 30%,${shade(ISS_COL[k%8],.35)},${ISS_COL[k%8]} 60%,${shade(ISS_COL[k%8],-.2)})"></i>${esc(it.name)}</span><span class="n">${it.val==null?"—":it.val}</span></div>`).join("");
