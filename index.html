@@ -249,6 +249,30 @@ h2:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,
 .period .val{background:linear-gradient(90deg,#FFF5E6,#FFE9CC)!important;border-color:#F2CF9C!important;color:#A9560A!important}
 :root[data-theme="dark"] .period .val{background:linear-gradient(90deg,#3A2A14,#4A3417)!important;border-color:#6B4A1C!important;color:#FFC98A!important}
 footer{background:var(--sec)!important}
+
+/* v18: pie pop-out + big info card */
+.pslice{cursor:pointer}
+#tip.big{min-width:300px;padding:16px 24px 18px;border-radius:18px;border-top:8px solid var(--tc);text-align:center}
+#tip.big .tt1{font-size:44px;font-weight:900;letter-spacing:3px;opacity:1;color:var(--tc);filter:brightness(1.25);line-height:1.05}
+#tip.big .tt2{font-size:21px;font-weight:700;opacity:.9;margin-top:2px}
+#tip.big .tt3{font-size:38px;font-weight:900;margin-top:8px}
+#tip.big .tt4{font-size:18px;opacity:.85}
+@media (max-width:700px){#tip.big{min-width:230px}#tip.big .tt1{font-size:34px}#tip.big .tt3{font-size:30px}}
+
+/* Team FGD gratitude strip */
+.teamstrip{display:flex;align-items:stretch;background:var(--sec);border-top:3px solid #E2B33C;color:#fff;margin-top:6px}
+.ttag{flex:none;display:flex;align-items:center;padding:0 22px;background:rgba(0,0,0,.18);font-size:20px;font-weight:900;letter-spacing:2px;white-space:nowrap;color:#F6D97C}
+.tflow{flex:1;overflow:hidden;padding:14px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.ttrack{display:flex;align-items:center;width:max-content;animation:tflow 95s linear infinite}
+.ttrack .dup{display:flex;align-items:center;padding:0}
+.tflow:hover .ttrack,.tflow:active .ttrack{animation-play-state:paused}
+.ttrack span{white-space:nowrap;font-size:22px;font-weight:700;padding:0 4px;color:#fff}
+.ttrack em{font-style:normal;font-size:14px;font-weight:900;letter-spacing:1.5px;color:#2B1D00;background:linear-gradient(90deg,#E2B33C,#F6D97C);padding:3px 10px;border-radius:999px;margin-left:8px;vertical-align:3px}
+.ttrack b{color:#F6D97C;font-size:18px;padding:0 20px}
+@keyframes tflow{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ttrack{animation-duration:400s}}
+.teamstrip+footer{border-top:1px solid rgba(255,255,255,.15);justify-content:space-between}
+@media (max-width:700px){.teamstrip{flex-direction:column}.ttag{justify-content:center;padding:8px 12px;font-size:15px;letter-spacing:1px}.ttrack span{font-size:18px}}
 </style></head><body>
 <div class="band">
   <div class="photo" id="slides"><i class="s on"></i><i class="s"></i><i class="s"></i><i class="s"></i><i class="s"></i></div>
@@ -292,15 +316,12 @@ footer{background:var(--sec)!important}
       <li><b>Daily:</b> Latest date by default; infographic shows the previous 7 days (± 7 days for a selected date).</li>
       <li><b>Monthly:</b> 1st of the month to the selected date; infographic shows every day of the month.</li>
       <li><b>Yearly:</b> Financial year from 01-Apr to the selected date; infographic shows month-wise values.</li>
-      <li><b>FGD Availability (%)</b> = FGD run Hrs ÷ Unit run Hrs × 100 (Unit run Hrs taken as 24 if not entered).</li>
-      <li><b>SOx Removal Efficiency (%)</b> = (Inlet − Outlet) ÷ Inlet × 100, computed daily. FGD run Hrs = 0 is shown as <b>FGD NOT IN SERVICE</b>.</li>
-      <li><b>APC (%)</b> = Total FGD consumption (MU) ÷ Total unit generation (MU) × 100 for the selected period.</li>
-      <li><b>Data source:</b> FGD logbook (Google Sheet), auto-refreshed every 5 minutes.</li>
     </ul></div>
   </div>
 </div>
 <div class="upbar"><div><b>SHIFT ENGINEERS</b><span id="updBy"></span></div><button class="btn up" id="openUpd" type="button">⬆ UPLOAD LOGBOOK</button></div>
-<footer><span>Created by <b>Mridul Kanti Baruri</b> · 109384 · Operation · NTPC Sipat</span><span>FGD Stage-I · Units 1–3</span></footer>
+<div class="teamstrip" aria-label="With gratitude to Team FGD"><div class="ttag">🙏 WITH GRATITUDE TO TEAM FGD</div><div class="tflow"><div class="ttrack"><span>Shri Pushpendra Kumar Chaurasia<em>DGM</em></span><b>✦</b><span>Shri Manas Ranjan Behera<em>DGM</em></span><b>✦</b><span>Shri Dheer Singh Meena<em>DGM</em></span><b>✦</b><span>Shri Rajat Kumar Katiyar<em>Engineer</em></span><b>✦</b><span>Shri Ashish Gupta<em>Engineer</em></span><b>✦</b><span>Shri Dev Prabhakar Tiwari<em>Senior Manager</em></span><b>✦</b><span>Shri Kamlesh Prasad Shahu<em>Assistant Manager</em></span><b>✦</b><span>Shri Aman Yadav<em>Engineer</em></span><b>✦</b><span>Shri Rohit Kumar Singh<em>Engineer</em></span><b>✦</b><span>Shri Ramkishor Meena<em>Engineer</em></span><b>✦</b><span>Shri Jethwani Ravikumar Devandas<em>Engineer</em></span><b>✦</b><span>Shri Udit Narayan Verma<em>Engineer</em></span><b>✦</b><span>Shri Rajat Srivastava<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Rajat Sharma<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Vikas Kumar<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Harsh Verdhan Singh Dhawan<em>Sr. Asst. Engineer</em></span><b>✦</b><span aria-hidden="true" class="dup"><span>Shri Pushpendra Kumar Chaurasia<em>DGM</em></span><b>✦</b><span>Shri Manas Ranjan Behera<em>DGM</em></span><b>✦</b><span>Shri Dheer Singh Meena<em>DGM</em></span><b>✦</b><span>Shri Rajat Kumar Katiyar<em>Engineer</em></span><b>✦</b><span>Shri Ashish Gupta<em>Engineer</em></span><b>✦</b><span>Shri Dev Prabhakar Tiwari<em>Senior Manager</em></span><b>✦</b><span>Shri Kamlesh Prasad Shahu<em>Assistant Manager</em></span><b>✦</b><span>Shri Aman Yadav<em>Engineer</em></span><b>✦</b><span>Shri Rohit Kumar Singh<em>Engineer</em></span><b>✦</b><span>Shri Ramkishor Meena<em>Engineer</em></span><b>✦</b><span>Shri Jethwani Ravikumar Devandas<em>Engineer</em></span><b>✦</b><span>Shri Udit Narayan Verma<em>Engineer</em></span><b>✦</b><span>Shri Rajat Srivastava<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Rajat Sharma<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Vikas Kumar<em>Sr. Asst. Engineer</em></span><b>✦</b><span>Shri Harsh Verdhan Singh Dhawan<em>Sr. Asst. Engineer</em></span><b>✦</b></span></div></div></div>
+<footer><span>Created by <b>Mridul Kanti Baruri</b> · 109384 · Operation · NTPC Sipat</span><span>FGD Stage-I</span></footer>
 <dialog id="updDlg">
   <div class="dh">UPLOAD LOGBOOK<button class="x" id="updClose" aria-label="Close">×</button></div>
   <div class="db">
@@ -347,21 +368,48 @@ const nf=(v,d=1)=>v==null||!isFinite(v)?"—":v.toLocaleString("en-IN",{minimumF
 /* ---------- parse the logbook workbook ---------- */
 function sheetRows(wb,name){const n=wb.SheetNames.find(s=>s.trim().toUpperCase()===name);return n?XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,raw:true,defval:null,blankrows:true}):null}
 const COL=s=>s.split("").reduce((a,c)=>a*26+c.charCodeAt(0)-64,0)-1;
+/* columns are found by their HEADINGS, so inserting / moving columns in the sheet is safe */
+const NORM=v=>String(v==null?"":v).toUpperCase().replace(/\s+/g," ").trim();
+function headMap(rows,maxRow){
+  const hr=[];for(let i=0;i<Math.min(maxRow,rows.length);i++)hr.push((rows[i]||[]).map(NORM));
+  const w=Math.max(0,...hr.map(r=>r.length));const cols=[];
+  for(let c=0;c<w;c++){const parts=[];for(let i=0;i<hr.length;i++){let v=hr[i][c]||"";
+      if(!v&&i<hr.length-1){for(let k=c-1;k>=0;k--){if(hr[i][k]){v=hr[i][k];break}if(hr[i+1]&&hr[i+1][k]&&!/^UNIT ?[123]$/.test(hr[i+1][k]))break}}
+      parts.push(v)}
+    cols.push({c,group:parts.slice(0,-1).join(" | "),sub:parts[parts.length-1]||"",all:parts.join(" | ")})}
+  return cols}
 function parseWorkbook(wb){
   const de=sheetRows(wb,"DAILY_ENTRY");
   if(!de)throw new Error("This file has no DAILY_ENTRY sheet. Please upload the FGD logbook Excel.");
-  const h2=(de[1]||[]).map(x=>String(x||"").toUpperCase());
-  let cF=COL("U"),cU=COL("V");
-  if(/PRODUCTION/.test(h2[cF])&&/FGD|CONSUMPTION/.test(h2[cU])){cF=COL("V");cU=COL("U")}
-  const days={};let first=null,latest=null;
-  for(let i=2;i<de.length;i++){const r=de[i]||[];const d=toDay(r[1]);if(d==null)continue;
-    const g=c=>num(r[c]);const tri=c=>[g(c),g(c+1),g(c+2)];
-    const rec={load:tri(2),ur:tri(5),fr:tri(8),sin:tri(11),sout:tri(14),op:tri(17),fmu:g(cF),umu:g(cU),water:g(COL("X")),gp:g(COL("Y")),lc:g(COL("Z")),wbm:g(COL("AA")),dew:g(COL("AB"))};
-    days[d]=rec;if(first==null||d<first)first=d;
+  /* header block = rows above the first row that has a real date */
+  let first=-1;for(let i=0;i<Math.min(15,de.length);i++){const r=de[i]||[];if(r.some(v=>toDay(v)!=null&&typeof v!=="string"||(typeof v==="string"&&/^\s*\d{1,2}[.\/-]\d{1,2}[.\/-]\d{2,4}\s*$/.test(v)))){first=i;break}}
+  if(first<1)throw new Error("DAILY_ENTRY: heading rows not found.");
+  const H=headMap(de,first),miss=[];
+  const one=(re,not)=>{const h=H.find(x=>re.test(x.sub)&&!(not&&not.test(x.sub)))||H.find(x=>re.test(x.all)&&!(not&&not.test(x.all))&&!/UNIT ?[123]$/.test(x.sub));return h?h.c:null};
+  const tri=(re,not)=>{const g=H.filter(x=>re.test(x.group)&&!(not&&not.test(x.group)));const u=[1,2,3].map(n=>{const h=g.find(x=>new RegExp("UNIT ?-?"+n+"$").test(x.sub));return h?h.c:null});
+    if(u.every(v=>v==null)&&g.length>=3)return[g[0].c,g[1].c,g[2].c];return u};
+  const C={date:one(/(^| )DATE( |$)/),load:tri(/LOAD/),ur:tri(/UNIT RUN/),fr:tri(/FGD RUN/),sin:tri(/INLET/),sout:tri(/OUTLET/),op:tri(/OPACITY/),
+    fmu:one(/FGD.*(MU|CONSUMPTION)|CONSUMPTION.*FGD/,/PRODUCTION/),umu:one(/(UNIT|GEN).*PRODUCTION|PRODUCTION.*MU/),
+    water:one(/PROC.*WAT|PROCESS/),cw:one(/CLAR|CLEAR|CLRF/),gp:one(/GYPSUM ?PRODUCED|GYPSUM PRODUCTION/),lc:one(/LIMESTONE ?CONSUMED|LIMESTONE CONSUMPTION/),
+    wbm:one(/BALL ?MILL/),dew:one(/DEWATERING/)};
+  if(C.date==null)C.date=1;
+  if(C.fr.some(v=>v==null))throw new Error("DAILY_ENTRY: the 'FGD RUN HOURS' columns (UNIT 1/2/3) were not found. Please check the headings.");
+  const NAMES={load:"AVERAGE LOAD",ur:"UNIT RUN HOURS",sin:"SOx INLET",sout:"SOx OUTLET",op:"OPACITY",fmu:"FGD MU CONSUMPTION",umu:"UNIT MU PRODUCTION",water:"PROCESS WATER",gp:"GYPSUM PRODUCED",lc:"LIMESTONE CONSUMED",wbm:"WET BALL MILL RUN",dew:"DEWATERING RUN"};
+  for(const k in NAMES){const v=C[k];if(v==null||(Array.isArray(v)&&v.some(x=>x==null)))miss.push(NAMES[k])}
+  const days={};let firstD=null,latest=null;
+  for(let i=first;i<de.length;i++){const r=de[i]||[];const d=toDay(r[C.date]);if(d==null)continue;
+    const g=c=>c==null?null:num(r[c]);const t3=a=>a.map(g);
+    const rec={load:t3(C.load),ur:t3(C.ur),fr:t3(C.fr),sin:t3(C.sin),sout:t3(C.sout),op:t3(C.op),fmu:g(C.fmu),umu:g(C.umu),water:g(C.water),cw:g(C.cw),gp:g(C.gp),lc:g(C.lc),wbm:g(C.wbm),dew:g(C.dew)};
+    days[d]=rec;if(firstD==null||d<firstD)firstD=d;
     if(rec.fr.some(x=>x!=null)&&(latest==null||d>latest))latest=d}
   if(latest==null)throw new Error("No FGD running hours found in DAILY_ENTRY.");
   const trucks={};const tr=sheetRows(wb,"TRUCKS")||[];
-  for(let i=1;i<tr.length;i++){const r=tr[i]||[];const d=toDay(r[0]);if(d==null)continue;trucks[d]={gs:num(r[1]),gt:num(r[2]),lr:num(r[3]),lt:num(r[4])}}
+  if(tr.length){let hi=0;for(let i=0;i<Math.min(5,tr.length);i++){if((tr[i]||[]).some(v=>/DATE/.test(NORM(v)))){hi=i;break}}
+    const th=(tr[hi]||[]).map(NORM);const f=(re,not)=>{const i=th.findIndex(x=>re.test(x)&&!(not&&not.test(x)));return i<0?null:i};
+    const T={d:f(/DATE/),gs:f(/GYPSUM/,/TRUCK/),gt:f(/GYPSUM.*TRUCK/),lr:f(/LIMESTONE/,/TRUCK/),lt:f(/LIMESTONE.*TRUCK/)};
+    if(T.d==null)T.d=0;for(const[k,n]of[["gs","GYPSUM SOLD (MT)"],["gt","GYPSUM SOLD (TRUCKS)"],["lr","LIMESTONE RECEIVED (MT)"],["lt","LIMESTONE RECEIVED (TRUCKS)"]])if(T[k]==null)miss.push("TRUCKS: "+n);
+    for(let i=hi+1;i<tr.length;i++){const r=tr[i]||[];const d=toDay(r[T.d]);if(d==null)continue;const g=c=>c==null?null:num(r[c]);trucks[d]={gs:g(T.gs),gt:g(T.gt),lr:g(T.lr),lt:g(T.lt)}}}
+  const first_=firstD;
   const df=sheetRows(wb,"DEFECTS")||[];let issues=[];
   if(df.length&&/DEPARTMENT/i.test(String((df[0]||[])[0]||""))){
     for(let i=1;i<df.length;i++){const r=df[i]||[];const n=String(r[0]||"").trim();if(!n||/^TOTAL/i.test(n))continue;issues.push({name:n,val:num(r[1])})}
@@ -369,7 +417,7 @@ function parseWorkbook(wb){
     for(let j=1;j<hd.length;j++){const n=String(hd[j]||"").trim();if(!n||/TOTAL/i.test(n))continue;
       let v=tot?num(tot[j]):null;if(v==null){v=0;for(let i=1;i<df.length;i++){if(/TOTAL/i.test(String((df[i]||[])[0]||"")))continue;v+=num((df[i]||[])[j])||0}}
       issues.push({name:n,val:v})}}
-  return{days,trucks,issues,first,latest}}
+  return{days,trucks,issues,first:first_,latest,miss,hasCW:C.cw!=null}}
 /* ---------- calculations ---------- */
 let D=null;
 function* range(a,b){for(let d=a;d<=b;d++)yield d}
@@ -383,8 +431,8 @@ function unitKpi(u,a,b,daily){
       if(r.sin[u]!=null&&r.sout[u]!=null&&r.sin[u]>0){eS+=(r.sin[u]-r.sout[u])/r.sin[u];eN++}}}
   const rd=D.days[a];const nis=daily&&rd&&rd.fr[u]===0;
   return{load:lN?lS/lN:null,sin:iN?iS/iN:null,sout:oN?oS/oN:null,eff:eN?eS/eN*100:null,op:pN?pS/pN:null,fr,ur,avail:any&&ur>0?fr/ur*100:null,nis}}
-function common(a,b){const s={fmu:0,umu:0,water:0,gp:0,lc:0,wbm:0,dew:0,gs:0,gt:0,lr:0,lt:0};
-  for(const d of range(a,b)){const r=D.days[d];if(r)for(const k of["fmu","umu","water","gp","lc","wbm","dew"])if(r[k]!=null)s[k]+=r[k];
+function common(a,b){const s={fmu:0,umu:0,water:0,cw:0,gp:0,lc:0,wbm:0,dew:0,gs:0,gt:0,lr:0,lt:0};
+  for(const d of range(a,b)){const r=D.days[d];if(r)for(const k of["fmu","umu","water","cw","gp","lc","wbm","dew"])if(r[k]!=null)s[k]+=r[k];
     const t=D.trucks[d];if(t)for(const k of["gs","gt","lr","lt"])if(t[k]!=null)s[k]+=t[k]}
   s.apc=s.umu>0?s.fmu/s.umu*100:null;return s}
 /* ---------- state ---------- */
@@ -418,48 +466,71 @@ function barChart(pts,series,o){
       path+=(path?"L":"M")+x.toFixed(1)+","+y.toFixed(1);dots+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="var(--line)" stroke="var(--panel)" stroke-width="2" class="hit" data-tip="APC|${esc(p.l1+" "+p.l2)}|${nf(v,o.dec==null?1:o.dec)} ${esc(o.unit||"")}${o.extra?"|"+esc(o.extra(i)):""}"></circle>`});
     g+=`<path d="${path}" fill="none" stroke="#14A39A" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity=".9"/>${dots.replace(/fill="var\(--line\)"/g,'fill="#14A39A"')}`}
   return g+"</svg>"}
+/* availability circle: coloured sector sweeps clockwise from 12 o'clock (like a clock hand) */
+const SECT=(cx,cy,R,p)=>{if(p<=0)return"";if(p>=99.995)return`M${cx},${cy-R} A${R},${R} 0 1 1 ${cx-0.01},${cy-R} Z`;
+  const a=2*Math.PI*p/100,x=cx+R*Math.sin(a),y=cy-R*Math.cos(a);return`M${cx},${cy} L${cx},${cy-R} A${R},${R} 0 ${p>50?1:0} 1 ${x.toFixed(2)},${y.toFixed(2)} Z`};
 function gauge(pct,color,id){
-  const p=pct==null?0:Math.max(0,Math.min(100,pct)),cx=100,cy=100,R=87;let sect="";
-  if(p>=99.995)sect=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#gf${id})"/>`;
-  else if(p>0){const a=2*Math.PI*p/100,x=cx+R*Math.sin(a),y=cy-R*Math.cos(a);sect=`<path d="M${cx},${cy} L${cx},${cy-R} A${R},${R} 0 ${p>50?1:0} 1 ${x.toFixed(2)},${y.toFixed(2)} Z" fill="url(#gf${id})"/>`}
+  const p=pct==null?0:Math.max(0,Math.min(100,pct)),cx=100,cy=100,R=87;
+  const reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
   let ticks="";for(let k=0;k<40;k++)ticks+=`<line x1="${cx}" y1="${cy-99}" x2="${cx}" y2="${cy-(k%5?95:92.5)}" stroke="${color}" stroke-opacity="${k%5?.3:.8}" stroke-width="${k%5?1.3:2.2}" stroke-linecap="round" transform="rotate(${k*9} ${cx} ${cy})"/>`;
-  const txt=pct==null?"—":pct.toFixed(2);
+  const fin=pct==null?"—":pct.toFixed(2),start=reduce||pct==null?p:0;
   return `<svg viewBox="0 0 200 200"><defs>
   <linearGradient id="gf${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${color}" stop-opacity=".78"/><stop offset="1" stop-color="${color}"/></linearGradient>
   <radialGradient id="gl${id}" cx=".32" cy=".24" r=".75"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".55" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
   <filter id="gs${id}" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="${color}" flood-opacity=".35"/></filter></defs>
-  ${ticks}<g filter="url(#gs${id})"><circle cx="${cx}" cy="${cy}" r="${R}" fill="${color}" fill-opacity=".14"/>${sect}</g>
-  <circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#gl${id})"/><circle cx="${cx}" cy="${cy}" r="${R-1}" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
-  <text x="${cx}" y="${cy+13}" text-anchor="middle" font-size="${txt.length>5?32:38}" font-weight="900" fill="var(--txt)" stroke="var(--panel)" stroke-width="6" stroke-linejoin="round" paint-order="stroke">${txt}<tspan font-size="22" dx="1">%</tspan></text></svg>`}
+  ${ticks}<g filter="url(#gs${id})"><circle cx="${cx}" cy="${cy}" r="${R}" fill="var(--panel)"/><circle cx="${cx}" cy="${cy}" r="${R}" fill="${color}" fill-opacity=".14"/>
+  <path class="gsect" d="${SECT(cx,cy,R,start)}" fill="url(#gf${id})"/></g>
+  <circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#gl${id})" pointer-events="none"/><circle cx="${cx}" cy="${cy}" r="${R-1}" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
+  <text x="${cx}" y="${cy+13}" text-anchor="middle" font-size="${fin.length>5?32:38}" font-weight="900" fill="var(--txt)" stroke="var(--panel)" stroke-width="6" stroke-linejoin="round" paint-order="stroke"><tspan class="gnum" data-v="${pct==null?"":p}">${reduce||pct==null?fin:"0.00"}</tspan><tspan font-size="22" dx="1">%</tspan></text></svg>`}
+function countUp(){const els=[...document.querySelectorAll(".gnum")].filter(e=>e.dataset.v!=="");if(!els.length)return;
+  const ss=els.map(e=>e.closest("svg").querySelector(".gsect"));
+  const set=(i,v)=>{els[i].textContent=v.toFixed(2);if(ss[i])ss[i].setAttribute("d",SECT(100,100,87,v))};
+  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches){els.forEach((e,i)=>set(i,+e.dataset.v));return}
+  const t0=performance.now(),T=2000,ease=t=>1-Math.pow(1-t,3);
+  (function step(now){const k=Math.min(1,(now-t0)/T);els.forEach((e,i)=>{if(e.isConnected)set(i,+e.dataset.v*ease(k))});if(k<1)requestAnimationFrame(step)})(t0)}
 const ISS_COL=["#1E88E5","#FB8C00","#8E24AA","#43A047","#E53935","#00ACC1","#795548","#607D8B"];
 const shade=(hex,f)=>{const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const t=f<0?0:255,k=Math.abs(f);r=Math.round(r+(t-r)*k);g=Math.round(g+(t-g)*k);b=Math.round(b+(t-b)*k);return"#"+((1<<24)|(r<<16)|(g<<8)|b).toString(16).slice(1)};
-function donut(items){
+const DEPT_FULL={"BMD":"Boiler Maintenance Dept.","EMD":"Electrical Maintenance Dept.","TMD":"Turbine Maintenance Dept.","CHP":"Coal Handling Plant","C&I":"Control & Instrumentation","OFFSITE":"Offsite Maintenance","CIVIL":"Civil Maintenance"};
+let ISSEL=null;
+function donut(items,sel){
   const its=items.map((it,k)=>({...it,c:ISS_COL[k%8]})).filter(it=>(it.val||0)>0),tot=its.reduce((s,i)=>s+i.val,0);
-  const W=1000,H=530,cx=500,cy=240,RX=300,RY=185,DEP=52;
+  const W=1000,H=600,cx=500,cy=300,RX=300,RY=185,DEP=52;
   if(!tot)return `<svg viewBox="0 0 ${W} ${H}"><text x="${cx}" y="${cy}" text-anchor="middle" font-size="30" fill="var(--sub)">No issues</text></svg>`;
   let a=-Math.PI/2;const sl=its.map(it=>{const a1=a,a2=a+it.val/tot*2*Math.PI;a=a2;const m=(a1+a2)/2;return{...it,a1,a2,m,ox:0,oy:0}});
   const P=(s,ang,dy=0)=>[cx+s.ox+RX*Math.cos(ang),cy+s.oy+RY*Math.sin(ang)+dy];
-  let defs="<defs>",side="",top="",lab="";const outs=[];
+  const tipOf=(s,pc)=>`class="hit pslice" data-k="${esc(s.name)}" data-big="1" data-c="${s.c}" data-tip="${esc(s.name)}|${esc(DEPT_FULL[String(s.name).toUpperCase().trim()]||"Department")}|${s.val} ${s.val===1?"issue":"issues"}|${pc.toFixed(1)} % of all issues · FY to date"`;
+  let defs="<defs>",side="",top="",lab="",pop="";const outs=[];
   sl.forEach((s,k)=>{defs+=`<radialGradient id="pg${k}" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="${shade(s.c,.38)}"/><stop offset=".6" stop-color="${s.c}"/><stop offset="1" stop-color="${shade(s.c,-.18)}"/></radialGradient><linearGradient id="ps${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${shade(s.c,-.22)}"/><stop offset="1" stop-color="${shade(s.c,-.5)}"/></linearGradient>`});
-  /* side walls: only the front half (sin>0) is visible */
   const walls=[];sl.forEach((s,k)=>{const b1=Math.max(s.a1,0),b2=Math.min(s.a2,Math.PI);const b3=Math.max(s.a1,2*Math.PI),b4=Math.min(s.a2,3*Math.PI);
     for(const[x,y]of[[b1,b2],[b3,b4]])if(y>x)walls.push({k,s,x,y})});
   walls.sort((p,q)=>Math.abs(Math.PI/2-((p.x+p.y)/2)%(2*Math.PI))<Math.abs(Math.PI/2-((q.x+q.y)/2)%(2*Math.PI))?1:-1);
-  walls.forEach(w=>{const[x1,y1]=P(w.s,w.x),[x2,y2]=P(w.s,w.y),[x3,y3]=P(w.s,w.y,DEP),[x4,y4]=P(w.s,w.x,DEP);
-    side+=`<path d="M${x1},${y1} A${RX},${RY} 0 0 1 ${x2},${y2} L${x3},${y3} A${RX},${RY} 0 0 0 ${x4},${y4}Z" fill="url(#ps${w.k})"/>`});
-  sl.forEach((s,k)=>{const fr=s.val/tot,lg=fr>.5?1:0,[x1,y1]=P(s,s.a1),[x2,y2]=P(s,s.a2-1e-6),ox=cx+s.ox,oy=cy+s.oy,pc=fr*100;
-    top+=`<path d="M${ox},${oy} L${x1},${y1} A${RX},${RY} 0 ${lg} 1 ${x2},${y2}Z" fill="url(#pg${k})" stroke="rgba(255,255,255,.85)" stroke-width="2.5" class="hit" data-tip="${esc(s.name)}|FY to date|${s.val} issues (${pc.toFixed(1)} %)"></path>`;
+  const wallPath=(s,x,y,k)=>{const[x1,y1]=P(s,x),[x2,y2]=P(s,y),[x3,y3]=P(s,y,DEP),[x4,y4]=P(s,x,DEP);return `<path d="M${x1},${y1} A${RX},${RY} 0 0 1 ${x2},${y2} L${x3},${y3} A${RX},${RY} 0 0 0 ${x4},${y4}Z" fill="url(#ps${k})"/>`};
+  walls.forEach(w=>{side+=wallPath(w.s,w.x,w.y,w.k)});
+  sl.forEach((s,k)=>{const fr=s.val/tot,lg=fr>.5?1:0,[x1,y1]=P(s,s.a1),[x2,y2]=P(s,s.a2-1e-6),ox=cx,oy=cy,pc=fr*100,isSel=sel!=null&&s.name===sel;
     const txt=(pc>=10?pc.toFixed(0):pc.toFixed(1))+"%";
-    if(fr>=.07){const lx=ox+RX*.6*Math.cos(s.m),ly=oy+RY*.6*Math.sin(s.m)+10;
-      lab+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" font-size="${fr>.2?40:32}" font-weight="900" fill="#fff" stroke="rgba(0,0,0,.28)" stroke-width="4" paint-order="stroke" pointer-events="none">${txt}</text>`}
-    else{outs.push({s,txt,ex:Math.cos(s.m),ey:Math.sin(s.m),ox,oy});if(0){const ex=Math.cos(s.m),ey=Math.sin(s.m),[px,py]=[ox+RX*.92*ex,oy+RY*.92*ey+(ey>0?DEP*.5:0)],qx=ox+(RX+38)*ex,qy=oy+(RY+30)*ey+(ey>0?DEP:0),tx=qx+(ex>=0?36:-36);
-      lab+=`<polyline points="${px.toFixed(1)},${py.toFixed(1)} ${qx.toFixed(1)},${qy.toFixed(1)} ${tx.toFixed(1)},${qy.toFixed(1)}" fill="none" stroke="${s.c}" stroke-width="3"/><circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="5" fill="${s.c}"/><text x="${(tx+(ex>=0?8:-8)).toFixed(1)}" y="${(qy+10).toFixed(1)}" text-anchor="${ex>=0?"start":"end"}" font-size="30" font-weight="900" fill="${s.c}">${txt}</text>`}}});
-  for(const side of[1,-1]){const L=outs.filter(o=>(o.ex>=0?1:-1)===side).map(o=>({...o,px:o.ox+RX*.9*o.ex,py:o.oy+RY*.9*o.ey+(o.ey>0?DEP*.5:0)})).sort((a,b)=>a.py-b.py);
-    let last=-1e9;L.forEach(o=>{o.ty=Math.max(o.py-(o.ey<0?30:-30),last+46);last=o.ty});
-    const over=last-(H-20);if(over>0)L.forEach(o=>o.ty-=over);
-    L.forEach(o=>{const colX=cx+side*(RX+60),tx=colX+side*14;
-      lab+=`<polyline points="${o.px.toFixed(1)},${o.py.toFixed(1)} ${(colX-side*24).toFixed(1)},${o.ty.toFixed(1)} ${colX.toFixed(1)},${o.ty.toFixed(1)}" fill="none" stroke="${o.s.c}" stroke-width="3"/><circle cx="${o.px.toFixed(1)}" cy="${o.py.toFixed(1)}" r="5" fill="${o.s.c}" stroke="#fff" stroke-width="1.5"/><circle cx="${(tx+side*14).toFixed(1)}" cy="${o.ty.toFixed(1)}" r="11" fill="${o.s.c}"/><text x="${(tx+side*34).toFixed(1)}" y="${(o.ty+11).toFixed(1)}" text-anchor="${side>0?"start":"end"}" font-size="32" font-weight="900" fill="${o.s.c}">${o.txt}</text>`})}
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="System wise issues">${defs}<filter id="psh" x="-20%" y="-20%" width="140%" height="160%"><feGaussianBlur stdDeviation="12"/></filter></defs><ellipse cx="${cx}" cy="${cy+DEP+28}" rx="${RX*.95}" ry="${RY*.5}" fill="#0B3A75" opacity=".22" filter="url(#psh)"/>${side}${top}${lab}</svg>`}
+    if(isSel){
+      top+=`<path d="M${ox},${oy} L${x1},${y1} A${RX},${RY} 0 ${lg} 1 ${x2},${y2}Z" fill="${shade(s.c,-.55)}" opacity=".55"/>`;
+      /* lifted copy: pushed outward and up */
+      const L={...s,ox:Math.cos(s.m)*46,oy:Math.sin(s.m)*46*RY/RX-34};const Q=(ang,dy=0)=>[cx+L.ox+RX*Math.cos(ang),cy+L.oy+RY*Math.sin(ang)+dy];
+      const c0=[cx+L.ox,cy+L.oy],[p1x,p1y]=Q(s.a1),[p2x,p2y]=Q(s.a2-1e-6);
+      let g=`<g filter="url(#pop)">`;
+      for(const ang of[s.a1,s.a2]){const[ex,ey]=Q(ang);g+=`<path d="M${c0[0]},${c0[1]} L${ex},${ey} L${ex},${ey+DEP} L${c0[0]},${c0[1]+DEP}Z" fill="${shade(s.c,-.42)}"/>`}
+      for(const[x,y]of[[Math.max(s.a1,0),Math.min(s.a2,Math.PI)],[Math.max(s.a1,2*Math.PI),Math.min(s.a2,3*Math.PI)]])if(y>x)g+=wallPath(L,x,y,k);
+      g+=`<path d="M${c0[0]},${c0[1]} L${p1x},${p1y} A${RX},${RY} 0 ${lg} 1 ${p2x},${p2y}Z" fill="url(#pg${k})" stroke="#fff" stroke-width="3.5" ${tipOf(s,pc)}></path>`;
+      const lx=c0[0]+RX*(fr>=.07?.6:.78)*Math.cos(s.m),ly=c0[1]+RY*(fr>=.07?.6:.78)*Math.sin(s.m)+12;
+      if(fr>=.07)g+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" font-size="${fr>.2?46:36}" font-weight="900" fill="#fff" stroke="rgba(0,0,0,.35)" stroke-width="5" paint-order="stroke" pointer-events="none">${txt}</text>`;
+      pop=g+"</g>"}
+    else top+=`<path d="M${ox},${oy} L${x1},${y1} A${RX},${RY} 0 ${lg} 1 ${x2},${y2}Z" fill="url(#pg${k})" stroke="rgba(255,255,255,.85)" stroke-width="2.5" ${tipOf(s,pc)}></path>`;
+    if(fr>=.07){if(!isSel){const lx=ox+RX*.6*Math.cos(s.m),ly=oy+RY*.6*Math.sin(s.m)+10;
+      lab+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" font-size="${fr>.2?40:32}" font-weight="900" fill="#fff" stroke="rgba(0,0,0,.28)" stroke-width="4" paint-order="stroke" pointer-events="none">${txt}</text>`}}
+    else outs.push({s,txt,pc,ex:Math.cos(s.m),ey:Math.sin(s.m),ox,oy})});
+  for(const side_ of[1,-1]){const Lr=outs.filter(o=>(o.ex>=0?1:-1)===side_).map(o=>({...o,px:o.ox+RX*.9*o.ex,py:o.oy+RY*.9*o.ey+(o.ey>0?DEP*.5:0)})).sort((a,b)=>a.py-b.py);
+    let last=-1e9;Lr.forEach(o=>{o.ty=Math.max(o.py-(o.ey<0?30:-30),last+50,24);last=o.ty});
+    const over=last-(H-20);if(over>0)Lr.forEach(o=>o.ty-=over);
+    Lr.forEach(o=>{const colX=cx+side_*(RX+60),tx=colX+side_*14;
+      lab+=`<polyline points="${o.px.toFixed(1)},${o.py.toFixed(1)} ${(colX-side_*24).toFixed(1)},${o.ty.toFixed(1)} ${colX.toFixed(1)},${o.ty.toFixed(1)}" fill="none" stroke="${o.s.c}" stroke-width="3"/><circle cx="${o.px.toFixed(1)}" cy="${o.py.toFixed(1)}" r="5" fill="${o.s.c}" stroke="#fff" stroke-width="1.5"/>`+
+      `<g ${tipOf(o.s,o.pc)}><rect x="${side_>0?tx-6:tx-150}" y="${o.ty-24}" width="156" height="48" fill="transparent"/><circle cx="${(tx+side_*14).toFixed(1)}" cy="${o.ty.toFixed(1)}" r="12" fill="${o.s.c}"/><text x="${(tx+side_*34).toFixed(1)}" y="${(o.ty+11).toFixed(1)}" text-anchor="${side_>0?"start":"end"}" font-size="32" font-weight="900" fill="${o.s.c}">${o.txt}</text></g>`})}
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="System wise issues – touch a slice">${defs}<filter id="psh" x="-20%" y="-20%" width="140%" height="160%"><feGaussianBlur stdDeviation="12"/></filter><filter id="pop" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#0B1F3A" flood-opacity=".38"/></filter></defs><ellipse cx="${cx}" cy="${cy+DEP+28}" rx="${RX*.95}" ry="${RY*.5}" fill="#0B3A75" opacity=".22" filter="url(#psh)"/>${side}${top}${lab}${pop}</svg>`}
 /* ---------- render ---------- */
 const UC=["var(--u1)","var(--u2)","var(--u3)"];
 const SOFT=[["#3F86F2","#A9CBFF"],["#F59A45","#FFD6AC"],["#2FB37E","#A6E6C9"]];const APC_SOFT=["#8A7CF0","#D3CCFF"];
@@ -486,12 +557,12 @@ function render(){
     uh+=`<section class="unit" style="--uc:${UC[u]}"><div class="uhead">UNIT-${u+1}<span>660 MW</span></div>
       <div class="gauge">${gauge(k.avail,UC[u],u)}<div class="glabel">FGD AVAILABILITY</div><div class="gsub">FGD RUN ${nf(k.fr,1)} Hrs</div></div>
       ${rows.map(r=>`<div class="prow"><span>${r[0]}</span><b>${r[1]}</b></div>`).join("")}</section>`}
-  $("units").innerHTML=uh;
+  $("units").innerHTML=uh;countUp();
 
   const c=common(P.a,P.b),tot=daily?"For the day":"Total to "+fDs(P.b);
   const tile=(t,v,unit,note,d=1,strong,tc)=>`<div class="tile"${tc?` style="--tc:${tc}"`:""}><div class="tl">${t}</div><div class="tv">${nf(v,d)}<small>${unit}</small></div><div class="tn${strong?" strong":""}">${note}</div></div>`;
   $("groups").innerHTML=
-   `<section class="grp" style="--gc:var(--pw)"><div class="gh">● POWER &amp; WATER</div>${tile("APC · FGD AUXILIARY CONSUMPTION",c.apc,"%",nf(c.fmu,4)+" MU",4,true)}${tile("PROCESS WATER CONSUMPTION",c.water,"m³",tot,0)}</section>`+
+   `<section class="grp" style="--gc:var(--pw)"><div class="gh">● POWER &amp; WATER</div>${tile("APC · FGD AUXILIARY CONSUMPTION",c.apc,"%",nf(c.fmu,4)+" MU",4,true)}${tile("TOTAL WATER CONSUMPTION",c.water+c.cw,"m³",D.hasCW?"Process "+nf(c.water,0)+" m³ · Clarified "+nf(c.cw,0)+" m³":"Clarified water column not found in sheet",0)}</section>`+
    `<section class="grp" style="--gc:var(--lime)"><div class="gh">● LIMESTONE</div>${tile("LIMESTONE RECEIVED",c.lr,"MT",nf(c.lt,0)+" trucks")}${tile("LIMESTONE CONSUMED",c.lc,"MT",tot)}</section>`+
    `<section class="grp" style="--gc:var(--gyp)"><div class="gh">● GYPSUM</div>${tile("GYPSUM PRODUCED",c.gp,"MT",tot)}${tile("GYPSUM SOLD",c.gs,"MT",nf(c.gt,0)+" trucks")}</section>`+
    `<section class="grp" style="--gc:var(--run)"><div class="gh">● RUNNING HOURS</div>${tile("WET BALL MILL RUN",c.wbm,"Hrs",tot)}${tile("DEWATERING RUN",c.dew,"Hrs",tot,1,false,"var(--dew)")}</section>`;
@@ -504,7 +575,7 @@ function render(){
   const apcU=[];const apc=P.pts.map(p=>{let s=0,u=0,any=false;for(const d of range(p.a,p.b)){const x=D.days[d];if(x&&x.fmu!=null){s+=x.fmu;any=true;if(x.umu!=null)u+=x.umu}}apcU.push(u>0?s/u*100:null);return any?s:null});
   $("apcSub").textContent="Touch a bar for its value · period total "+nf(c.fmu,4)+" MU · APC "+nf(c.apc,4)+" %";
   $("chApc").innerHTML=barChart(P.pts,[{name:"APC",grad:APC_SOFT,vals:apcU}],{unit:"%",line:true,dec:4,title:"APC trend",id:"p",extra:i=>apc[i]==null?"":"FGD consumption "+nf(apc[i],4)+" MU"});
-  $("chIss").innerHTML=donut(D.issues);
+  $("chIss").innerHTML=donut(D.issues,ISSEL);
   $("iList").innerHTML=D.issues.map((it,k)=>`<div class="irow" style="--ic:${ISS_COL[k%8]}"><span><i style="background:radial-gradient(circle at 35% 30%,${shade(ISS_COL[k%8],.35)},${ISS_COL[k%8]} 60%,${shade(ISS_COL[k%8],-.2)})"></i>${esc(it.name)}</span><span class="n">${it.val==null?"—":it.val}</span></div>`).join("");
   $("main").hidden=false}
 /* ---------- controls ---------- */
@@ -539,7 +610,7 @@ async function load(){
     if(GSHEET){try{d=await readBook(GSHEET+(GSHEET.includes("?")?"&":"?")+"t="+Date.now());SOURCE="sheet"}catch(e){d=null}}
     if(!d){try{d=await readBook(DATA_FILE+"?t="+Date.now());SOURCE="upload"}catch(e){d=null}}
     if(!d)throw new Error("The logbook could not be loaded. Check the internet connection and refresh the page.");
-    D=d;msg("");render();
+    D=d;msg(d.miss&&d.miss.length?"Note: column heading not found in the Google Sheet – "+d.miss.join(", ")+". Those values show as blank.":"");render();
   }catch(e){msg(e.message||"The logbook could not be loaded.",true)}}
 setInterval(()=>{if(SOURCE==="sheet"&&!document.hidden)load()},5*60*1000);
 /* ---------- upload history (public, from GitHub) ---------- */
@@ -594,14 +665,21 @@ $("uGo").addEventListener("click",async()=>{
   }catch(e){uMsg(e.message||"Could not reach GitHub. Check the internet connection.","bad");$("uGo").disabled=false}});
 /* ---------- tap / hover tooltips ---------- */
 const tip=document.createElement("div");tip.id="tip";tip.hidden=true;document.body.appendChild(tip);let tipEl=null;
-function showTip(el,x,y){const p=(el.getAttribute("data-tip")||"").split("|");
+function showTip(el,x,y){const p=(el.getAttribute("data-tip")||"").split("|");tip.classList.toggle("big",!!el.dataset.big);tip.style.setProperty("--tc",el.dataset.c||"#fff");
   tip.innerHTML=`<div class="tt1">${p[0]||""}</div><div class="tt2">${p[1]||""}</div><div class="tt3">${p[2]||""}</div>`+(p[3]?`<div class="tt4">${p[3]}</div>`:"");
   tip.hidden=false;const w=tip.offsetWidth,h=tip.offsetHeight;let left=x-w/2,top=y-h-18;
+  if(el.dataset.big){const c=$("chIss").getBoundingClientRect(),narrow=c.width<640;
+    if(narrow){left=c.left+(c.width-w)/2;top=c.bottom-14}else{const right=x>c.left+c.width/2;left=right?c.left+22:c.right-w-22;top=c.top+c.height*.30}
+    left=Math.max(8,Math.min(innerWidth-w-8,left));tip.style.left=left+"px";tip.style.top=top+"px";if(tipEl)tipEl.classList.remove("on");tipEl=el;return}
   left=Math.max(8,Math.min(innerWidth-w-8,left));if(top<8)top=y+22;tip.style.left=left+"px";tip.style.top=top+"px";
   if(tipEl)tipEl.classList.remove("on");tipEl=el;el.classList.add("on")}
 function hideTip(){tip.hidden=true;if(tipEl)tipEl.classList.remove("on");tipEl=null}
 document.addEventListener("pointermove",e=>{const el=e.target.closest&&e.target.closest(".hit");if(el&&e.pointerType==="mouse")showTip(el,e.clientX,e.clientY);else if(e.pointerType==="mouse")hideTip()});
-document.addEventListener("click",e=>{const el=e.target.closest&&e.target.closest(".hit");if(el){const r=el.getBoundingClientRect();showTip(el,r.left+r.width/2,r.top)}else hideTip()});
+document.addEventListener("click",e=>{let el=e.target.closest&&e.target.closest(".hit");
+  if(el&&el.classList.contains("pslice")&&D){const k=el.dataset.k;ISSEL=ISSEL===k?null:k;$("chIss").innerHTML=donut(D.issues,ISSEL);
+    if(ISSEL==null){hideTip();return}el=[...document.querySelectorAll("#chIss path.pslice")].find(x=>x.dataset.k===k)||el}
+  else if(!el&&ISSEL!=null&&D){ISSEL=null;$("chIss").innerHTML=donut(D.issues,null)}
+  if(el){const r=el.getBoundingClientRect();showTip(el,r.left+r.width/2,r.top)}else hideTip()});
 addEventListener("scroll",()=>{if(tipEl&&!tip.hidden){const r=tipEl.getBoundingClientRect();showTip(tipEl,r.left+r.width/2,r.top)}},{passive:true});
 window.__fgd={parseWorkbook,get D(){return D},set D(v){D=v},render,setView(v){view=v},setDate(d){selDate=d},setMonth(m){selMonth=m},period,unitKpi,common,fromIso,openKey};
 if(!window.__FGD_TEST__){load();history()}
