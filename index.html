@@ -284,6 +284,15 @@ footer{background:var(--sec)!important}
 /* total water split – clearer */
 .tn .wsp{display:block;color:var(--txt);font-weight:800;opacity:.85;line-height:1.35}
 .tn .wsp b{font-weight:900;color:var(--tc,var(--gc));opacity:1}
+
+/* issue chips act as buttons */
+.issuesCard .irow.chip{cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+.issuesCard .irow.chip:hover,.issuesCard .irow.chip.sel{transform:translateY(-3px);box-shadow:0 8px 18px color-mix(in srgb,var(--ic) 35%,transparent)!important;border-color:var(--ic)!important}
+
+/* total defects chip */
+.issuesCard .irow.totchip{background:linear-gradient(90deg,#1B2B42,#2C4A72)!important;border-color:#1B2B42!important;padding:10px 24px!important;gap:14px;cursor:default}
+.issuesCard .irow.totchip span{color:#fff;letter-spacing:2px}
+.issuesCard .irow.totchip .n{color:#F6D97C!important;font-size:1.2em}
 </style></head><body>
 <div class="band">
   <div class="photo" id="slides"><i class="s on"></i><i class="s"></i><i class="s"></i><i class="s"></i><i class="s"></i></div>
@@ -520,7 +529,7 @@ function donut(items,sel){
   sl.forEach((s,k)=>{const fr=s.val/tot,lg=fr>.5?1:0,[x1,y1]=P(s,s.a1),[x2,y2]=P(s,s.a2-1e-6),ox=cx,oy=cy,pc=fr*100,isSel=sel!=null&&s.name===sel;
     const txt=(pc>=10?pc.toFixed(0):pc.toFixed(1))+"%";
     if(isSel){
-      top+=`<path d="M${ox},${oy} L${x1},${y1} A${RX},${RY} 0 ${lg} 1 ${x2},${y2}Z" fill="${shade(s.c,-.55)}" opacity=".55"/>`;
+      top+=`<path d="M${ox},${oy} L${x1},${y1} A${RX},${RY} 0 ${lg} 1 ${x2},${y2}Z" fill="${shade(s.c,-.55)}" opacity=".55" ${tipOf(s,pc)}></path>`;
       /* lifted copy: pushed outward and up */
       const L={...s,ox:Math.cos(s.m)*46,oy:Math.sin(s.m)*46*RY/RX-34};const Q=(ang,dy=0)=>[cx+L.ox+RX*Math.cos(ang),cy+L.oy+RY*Math.sin(ang)+dy];
       const c0=[cx+L.ox,cy+L.oy],[p1x,p1y]=Q(s.a1),[p2x,p2y]=Q(s.a2-1e-6);
@@ -534,7 +543,7 @@ function donut(items,sel){
     else top+=`<path d="M${ox},${oy} L${x1},${y1} A${RX},${RY} 0 ${lg} 1 ${x2},${y2}Z" fill="url(#pg${k})" stroke="rgba(255,255,255,.85)" stroke-width="2.5" ${tipOf(s,pc)}></path>`;
     if(fr>=.07){if(!isSel){const lx=ox+RX*.6*Math.cos(s.m),ly=oy+RY*.6*Math.sin(s.m)+10;
       lab+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" font-size="${fr>.2?40:32}" font-weight="900" fill="#fff" stroke="rgba(0,0,0,.28)" stroke-width="4" paint-order="stroke" pointer-events="none">${txt}</text>`}}
-    else outs.push({s,txt,pc,ex:Math.cos(s.m),ey:Math.sin(s.m),ox,oy})});
+    else{outs.push({s,txt,pc,ex:Math.cos(s.m),ey:Math.sin(s.m),ox,oy});if(!isSel)lab+=`<path d="M${ox},${oy} L${x1},${y1} A${RX},${RY} 0 ${lg} 1 ${x2},${y2}Z" fill="transparent" stroke="transparent" stroke-width="26" stroke-linejoin="round" ${tipOf(s,pc)}></path>`}});
   for(const side_ of[1,-1]){const Lr=outs.filter(o=>(o.ex>=0?1:-1)===side_).map(o=>({...o,px:o.ox+RX*.9*o.ex,py:o.oy+RY*.9*o.ey+(o.ey>0?DEP*.5:0)})).sort((a,b)=>a.py-b.py);
     let last=-1e9;Lr.forEach(o=>{o.ty=Math.max(o.py-(o.ey<0?30:-30),last+50,24);last=o.ty});
     const over=last-(H-20);if(over>0)Lr.forEach(o=>o.ty-=over);
@@ -587,7 +596,7 @@ function render(){
   $("apcSub").textContent="Total "+nf(c.fmu,4)+" MU · APC "+nf(c.apc,4)+" % · Tap a bar to see the value";
   $("chApc").innerHTML=barChart(P.pts,[{name:"APC",grad:APC_SOFT,vals:apcU}],{unit:"%",line:true,dec:4,title:"APC trend",id:"p",extra:i=>apc[i]==null?"":"FGD consumption "+nf(apc[i],4)+" MU"});
   $("chIss").innerHTML=donut(D.issues,ISSEL);
-  $("iList").innerHTML=D.issues.map((it,k)=>`<div class="irow" style="--ic:${ISS_COL[k%8]}"><span><i style="background:radial-gradient(circle at 35% 30%,${shade(ISS_COL[k%8],.35)},${ISS_COL[k%8]} 60%,${shade(ISS_COL[k%8],-.2)})"></i>${esc(it.name)}</span><span class="n">${it.val==null?"—":it.val}</span></div>`).join("");
+  $("iList").innerHTML=D.issues.map((it,k)=>`<div class="irow hit pslice chip" data-k="${esc(it.name)}" data-big="1" data-c="${ISS_COL[k%8]}" data-tip="x" style="--ic:${ISS_COL[k%8]}"><span><i style="background:radial-gradient(circle at 35% 30%,${shade(ISS_COL[k%8],.35)},${ISS_COL[k%8]} 60%,${shade(ISS_COL[k%8],-.2)})"></i>${esc(it.name)}</span><span class="n">${it.val==null?"—":it.val}</span></div>`).join("")+`<div class="irow totchip"><span>TOTAL</span><span class="n">${D.issues.reduce((t,i)=>t+(i.val||0),0)}</span></div>`;
   $("main").hidden=false}
 /* ---------- controls ---------- */
 document.querySelectorAll("#viewSeg button").forEach(b=>b.addEventListener("click",()=>{view=b.dataset.v;if(view!=="MONTHLY")selMonth=null;render()}));
@@ -685,11 +694,18 @@ function showTip(el,x,y){const p=(el.getAttribute("data-tip")||"").split("|");ti
   left=Math.max(8,Math.min(innerWidth-w-8,left));if(top<8)top=y+22;tip.style.left=left+"px";tip.style.top=top+"px";
   if(tipEl)tipEl.classList.remove("on");tipEl=el;el.classList.add("on")}
 function hideTip(){tip.hidden=true;if(tipEl)tipEl.classList.remove("on");tipEl=null}
-document.addEventListener("pointermove",e=>{const el=e.target.closest&&e.target.closest(".hit");if(el&&e.pointerType==="mouse")showTip(el,e.clientX,e.clientY);else if(e.pointerType==="mouse")hideTip()});
-document.addEventListener("click",e=>{let el=e.target.closest&&e.target.closest(".hit");
-  if(el&&el.classList.contains("pslice")&&D){const k=el.dataset.k;ISSEL=ISSEL===k?null:k;$("chIss").innerHTML=donut(D.issues,ISSEL);
-    if(ISSEL==null){hideTip();return}el=[...document.querySelectorAll("#chIss path.pslice")].find(x=>x.dataset.k===k)||el}
-  else if(!el&&ISSEL!=null&&D){ISSEL=null;$("chIss").innerHTML=donut(D.issues,null)}
+let PIN=false;
+const pieEl=k=>[...document.querySelectorAll("#chIss .pslice")].filter(x=>x.dataset.k===k).pop();
+function popTo(k){ISSEL=k;$("chIss").innerHTML=donut(D.issues,ISSEL);document.querySelectorAll("#iList .chip").forEach(c=>c.classList.toggle("sel",c.dataset.k===k));
+  const el=k==null?null:([...document.querySelectorAll("#chIss path.pslice")].find(x=>x.dataset.k===k&&x.closest("g[filter]"))||pieEl(k));
+  if(el){const r=el.getBoundingClientRect();showTip(el,r.left+r.width/2,r.top)}else hideTip()}
+document.addEventListener("pointermove",e=>{if(e.pointerType!=="mouse")return;const el=e.target.closest&&e.target.closest(".hit");
+  if(el&&el.classList.contains("pslice")&&D){if(el.dataset.k!==ISSEL&&!PIN)popTo(el.dataset.k);return}
+  if(!PIN&&ISSEL!=null&&D&&!(e.target.closest&&e.target.closest("#tip")))popTo(null);
+  if(el)showTip(el,e.clientX,e.clientY);else if(!PIN)hideTip()});
+document.addEventListener("click",e=>{const el=e.target.closest&&e.target.closest(".hit");
+  if(el&&el.classList.contains("pslice")&&D){const k=el.dataset.k;if(PIN&&ISSEL===k){PIN=false;popTo(null)}else{PIN=true;popTo(k)}return}
+  if(ISSEL!=null&&D){PIN=false;popTo(null)}
   if(el){const r=el.getBoundingClientRect();showTip(el,r.left+r.width/2,r.top)}else hideTip()});
 addEventListener("scroll",()=>{if(tipEl&&!tip.hidden){const r=tipEl.getBoundingClientRect();showTip(tipEl,r.left+r.width/2,r.top)}},{passive:true});
 window.__fgd={parseWorkbook,get D(){return D},set D(v){D=v},render,setView(v){view=v},setDate(d){selDate=d},setMonth(m){selMonth=m},period,unitKpi,common,fromIso,openKey};
